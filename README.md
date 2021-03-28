@@ -1,5 +1,5 @@
-# Projekti ne lenden : Interneti
-
+# Projekti ne lenden : PHP ( Tranzicion nga lenda Interneti)
+# OLD
 [![Netlify Status](https://api.netlify.com/api/v1/badges/bbb5558a-276d-4b77-ba93-7136ae667166/deploy-status)](https://kinofiek.online/)
 
 Kinofiek eshte website i zhvilluar me HTML5, CSS3, JavaScript dhe jQuery ku perdoruesit mund te:
