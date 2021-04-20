@@ -16,7 +16,7 @@ let trailerTitle = document.getElementById('trailer-title');
 let term = '';
 
 function generateDetails() {
-  getMovieDetails(checkURL());
+  // getMovieDetails(checkURL());
   movieDetailsScreen.style.visibility = 'visible';
   trailerBlock.style.visibility = 'visible';
   loadingScreen.style.display = 'none';
@@ -61,6 +61,7 @@ function getMovieDetails(movieID) {
         },
         (trailer) => {
           let videoTag = trailer.items[0].id.videoId;
+          console.log(videoTag);
           $(trailerFrame).attr(
             'src',
             'https://www.youtube.com/embed/' + videoTag
@@ -71,4 +72,4 @@ function getMovieDetails(movieID) {
   );
 }
 
-setTimeout(generateDetails, 3000);
+setTimeout(generateDetails, 0);

@@ -31,7 +31,7 @@ body {
 }
 
 #trailerBlock {
-  margin-left: 5%;
+  margin: 5% auto;
   visibility: hidden;
   width: fit-content;
 }
@@ -114,6 +114,10 @@ body {
   background: #ccc;
   vertical-align: super;
   animation: growShrink 2s linear infinite alternate;
+}
+
+.recommended {
+  margin-top: 3%;
 }
 
 @keyframes growShrink {

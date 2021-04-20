@@ -99,16 +99,16 @@ body {
 nav {
   padding-top: 2%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
   min-height: 8vh;
 }
 
 .navBar {
   display: flex;
-  justify-content: space-around;
+
   font-size: 1.3em;
-  margin-left: 100px;
+  margin: auto;
   color: var(--text-color);
 }
 
@@ -123,7 +123,7 @@ nav {
 }
 
 #searchBar {
-  margin-left: 50%;
+  margin: auto;
   background-image: url(/assets/images/searchIcon.png);
   color: var(--text-color);
   background-position: 96% 6px;
@@ -142,6 +142,12 @@ nav {
   width: 100%;
   padding: 3% 5% 3% 5%;
   border: 1px solid #d6d6d6;
+}
+
+#profilePic {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
 }
 
 .slideshow {
