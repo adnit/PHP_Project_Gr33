@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./styles/rezervo.css">
     <meta charset="UTF-8" />
     <meta
       name="description"
@@ -158,9 +159,11 @@
   .navbar .dropdown-menu i {
       font-size: 16px;
       min-width: 22px;
+      color: var(--text-color);
   }
   .navbar ul.nav li.active a, .navbar ul.nav li.open > a {
-      background: transparent !important;
+      background-color: var(--body-bg);
+      color: var(--text-color);
   } 
   .navbar .nav .get-started-btn {
       min-width: 120px;
@@ -183,6 +186,12 @@
   .navbar .nav .dropdown-menu li a, .navbar .nav .dropdown-menu li a:hover, .navbar .nav .dropdown-menu li a:focus {
       padding: 8px 20px;
       line-height: normal;
+      color: var(--text-color);
+      background-color: var(--body-bg);
+  }
+  .dropdown-menu li a{
+    color: var(--text-color);
+    background-color: var(--body-bg);
   }
   .navbar .navbar-form {
       border: none;
@@ -193,6 +202,7 @@
       left: auto;
       right: 0;
       font-size: 14px;
+      color: var(--text-color);
   }
   .navbar .dropdown-menu.form-wrapper a {
       color: var(--text-color);
@@ -200,9 +210,11 @@
   }
   .navbar .dropdown-menu.form-wrapper a:hover{
       text-decoration: underline;
+      color: var(--text-color);
   }
   .navbar .form-wrapper .hint-text {
       text-align: center;
+      color: black;
       margin-bottom: 15px;
       font-size: 13px;
   }
@@ -221,15 +233,15 @@
   .navbar .social-btn .btn-primary {
       background: var(--body-bg);
   }
-   .navbar .social-btn .btn-primary:hover {
+  .navbar .social-btn .btn-primary:hover {
       background: #4676bd;
-  } 
+  }
   .navbar .social-btn .btn-info {
       background: var(--body-bg);
   }
-   .navbar .social-btn .btn-info:hover {
+  .navbar .social-btn .btn-info:hover {
       background: #4ec7ef;
-  } 
+  }
   .navbar .social-btn .btn i {
       margin-right: 5px;
       font-size: 16px;
@@ -247,7 +259,6 @@
   .navbar .form-wrapper .checkbox-inline input {
       margin-top: 3px;
   }
-  
   .navbar .checkbox-inline {
       font-size: 13px;
   }
@@ -276,6 +287,8 @@
       .navbar .nav .btn-primary, .navbar .nav .btn-primary:active {
           display: block;
       }
+
+
   }
   </style>
     </head>
@@ -296,8 +309,16 @@
           <li><a href="./index.html">Home</a></li>
           <li><a href="./katalogu.html">Katalogu</a></li>
           <li><a href="./events.html">Evente</a></li>
-          <li><a href="#">Rezervo</a></li>
           <li><a href="./kontakti.html">Kontakti</a></li>
+          <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Sallat<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Salla 1</a></li>
+              <li><a href="#">Salla 2</a></li>
+              <li><a href="#">Salla 3</a></li>
+              <li><a href="#">Salla 4</a></li>
+            </ul>
+          </li>
         </ul>
         <form class="navbar-form form-inline">
           <div class="input-group search-box">
@@ -319,9 +340,6 @@
                     <input type="password" class="form-control" placeholder="Password" required="required">
                   </div>
                   <input type="submit" class="btn btn-primary btn-block" value="Login">
-                  <div class="form-footer">
-                    <a href="#">Keni harruar passwordin?</a>
-                  </div>
                 </form>
               </li>
             </ul>
@@ -358,8 +376,81 @@
         </ul>
       </div>
     </nav>
+        <div class="myFrame">
+          <div class="menu-head">
+            <h1>KINOFIEK SNACKS</h1>
+          </div>
+          <div class="menu food">
+            <div class="food1">
+              <h2>Snacks</h2>
+              <ul>
+                <li>
+                  Popcorns
+                  <ul style="padding-left: 20px">
+                    <li>Mini Bucket <b style="color: white">......1$</b></li>
+                    <li>Medium Bucket <b style="color: white">....2$</b></li>
+                    <li>Large Bucket <b style="color: white">.....3$</b></li>
+                  </ul>
+                </li>
+                <li>
+                  Nachos
+                  <ul style="padding-left: 20px">
+                    <li>Beef Nachos <b style="color: white">......3$</b></li>
+                    <li>Cheese Nachos <b style="color: white">....4$</b></li>
+                    <li>Pepper Nachos <b style="color: white">....4$</b></li>
+                  </ul>
+                </li>
+                <li>
+                  Chocolates
+                  <ul style="padding-left: 20px">
+                    <li>Snickers <b style="color: white">.........2$</b></li>
+                    <li>Bounty <b style="color: white">...........2$</b></li>
+                  </ul>
+                </li>
+                <li>
+                  Potato Wedges
+                  <ul style="padding-left: 20px">
+                    <li>Min Bucket <b style="color: white">.......2$</b></li>
+                    <li>Large Bucket <b style="color: white">.....4$</b></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="food2">
+              <h2>Drinks</h2>
+              <ul>
+                <li>
+                  Hot Beverages
+                  <ul style="padding-left: 20px">
+                    <li>Coffee <b style="color: white">...............2$</b></li>
+                    <li>Chocolate Milk <b style="color: white">.......3$</b></li>
+                    <li>Cafe Latte <b style="color: white">...........3$</b></li>
+                  </ul>
+                </li>
+                <li>
+                  Cold Beverages
+                  <ul style="padding-left: 20px">
+                    <li>Water 0.5L <b style="color: white">.........1,5$</b></li>
+                    <li>Mineral Water 0.5L <b style="color: white">...2$</b></li>
+                    <li>Coca cola 0.33L <b style="color: white">......3$</b></li>
+                    <li>Fanta 0.33L <b style="color: white">..........3$</b></li>
+                    <li>Sprite 0.33L <b style="color: white">.........3$</b></li>
+                    <li>Redbull 0.25L <b style="color: white">........5$</b></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+    
+       
+    
     <canvas id="darkModeBtn" width="150" height="150"></canvas>
     <script src="/scripts/theme.js"></script>
+    <script src="scripts/Confirmation&Validation.js"></script>
+    <script src="scripts/formsPopups.js"></script>
+    <script src="scripts/location.js"></script>
+    <script src="scripts/drop&drag.js"></script>
     <script>
       $(document).on("click", ".navbar-right .dropdown-menu", function(e){
         e.stopPropagation();
