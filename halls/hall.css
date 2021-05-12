@@ -1,7 +1,7 @@
 .timeline_box {
     
-    margin-top: 10px;
-    margin-left: 350px;
+    margin-top: 1.5%;
+    margin-left: 22%;
     height: 300px;
     width: 60%;
     border: 2px solid rgb(49, 48, 48);
@@ -46,10 +46,9 @@
       height: 25%;
   }
   a.button_movie{
-    width : 77%;
-    margin-top: 4px;
-    margin-left: 0.5%;
-    height:90%;
+
+    width : 100%;
+    height:100%;
     padding: 0.2em 1.45em;
     border: 0.15em solid #8a8787;
     box-sizing: border-box;
@@ -59,6 +58,8 @@
     color: #000000;
     background-color:#CCCCCC;
     text-align: center;
+    font-size: 17px;
+    display: flex;
     position: relative;
     }
     a.button_movie:hover{
@@ -74,4 +75,48 @@
     margin: 0.2em auto;}
     }
 
-    
+    #box {
+      width: 77%;
+      margin-top: 4px;
+      margin-left: 0.5%;
+      height:90%;
+    }
+    #box form {
+     background:#a0b5c0;
+     padding:5px;
+     border-radius: 5%;
+     border: 1px solid black;
+     display:none;
+     position:absolute;
+     top:30%;
+     width:30%;
+     height: 50%;
+     margin-left: 20%;
+    }
+
+    .hallpic_box {    
+      
+      height: 60%;
+      width: 35%;
+      border: 2px solid rgb(49, 48, 48);
+      box-shadow: 1px 4px 5px rgb(92, 90, 90);
+      border-radius : 4px;       
+    }
+
+    .box2-area {
+      height: 500px;
+      margin-top: 6%;
+      margin-left: 10%;
+      margin-bottom: 5%;
+      display: flex;
+      }
+
+      .halldesc_box {    
+      
+        height: 60%;
+        width: 45%;
+        margin-left: 10%;
+        border: 2px solid rgb(49, 48, 48);
+        box-shadow: 1px 4px 5px rgb(92, 90, 90);
+        border-radius : 4px;       
+      }
