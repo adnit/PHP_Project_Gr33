@@ -379,11 +379,17 @@
       <div class="timeline_box">
         <div id="flex_box1">
           <div class="time_box" id="date"><bold></bold></div>
-          <div class="time_interval">00:00</div>
-          <div class="time_interval">01:00</div>
-          <div class="time_interval">01:30</div>
-          <div class="time_interval">02:00</div>
-          <div class="time_interval">02:30</div>
+          <?php
+
+          $H = (int)date("H") - 2;
+
+          for($i = 0; $i < 5; $i++){
+
+            echo "<div class=\"time_interval\">$H:00</div><br>";
+            $H++;   
+          }
+
+?>
         </div>
         <div id="flex_box2">
           <div class="time_box" style="display:inline-block; padding:2%; padding-left:7%;">Filmi</div>
