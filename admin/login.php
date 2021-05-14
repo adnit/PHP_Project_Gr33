@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html>
 <?php
+require_once('connect.php');
 
-
-$firstLastName = $_POST["firstLastName"];
+if(isset($_POST['username'])) {
 $username = $_POST["username"];
-$email = $_POST["email"];
-$password = $_POST["password"];
-	$sql = "SELECT * FROM users WHERE username= :username";
+$password = $_POST["password"]; 
 
+	$sql = "SELECT * FROM users WHERE Username= :username";
 				$insertSql = $con->prepare($sql);
 
 				$insertSql->bindParam(':username', $username);
@@ -18,29 +17,36 @@ $password = $_POST["password"];
 				 
 				if ($data == null) {
 					$_SESSION['error'] = "Wrong Username !";
-					$_SESSION['error1'] = " The username was not found in the server.";
-					header('location: ../index.php');	
+					echo " The username was not found in the server.";
 				}else{
-					$passwordHashed = password_hash($password, PASSWORD_DEFAULT);
-					if (password_verify($password, $data['password'])) {
+
+          $hashed = strval($data['Password']);
+          var_dump(password_verify($password, $hashed));
+					if (password_verify($password, $hashed)) {
 						$_SESSION["username"] = $username;
 						$_SESSION["password"] = $password;
-						$_SESSION["id"] = $data['id'];
 						$_SESSION["email"] = $data['email'];
-						$_SESSION["user_type"] = $data['type'];
-						if ($data['type'] == "user") {
+						$_SESSION["user_type"] = $data['UserType'];
+						if ($data['UserType'] == "User") {
 							header('location: ../intro.php');
 							var_dump($data["type"]);
 						}else if ($data['type'] == "admin") {
-							header('location: ../dashboardAdmin.php');
+							header('location: ../index.html');
 						}
 					} else{
 						$_SESSION['error'] = "Wrong Password !";
 						var_dump("nice");
 						$_SESSION['error1'] = " The username and password dont match.";
-						header('location: ../index.php');
+						// header('location: ../index.php');
 					}
 				}
+}
+
+// if(empty($username) || empty($password)) {
+// 	$_SESSION['error'] = "Fill All";
+// 	header('Location: ../index.php');
+// }
+
 ?>
 <head>
   <meta charset="utf-8">
