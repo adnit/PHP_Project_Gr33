@@ -324,7 +324,7 @@
             <div class="input-group search-box">
               <input type="text" id="search" class="form-control" placeholder="Search here...">
               <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
-            </div>
+            </div> 
           </form>
           <ul class="nav navbar-nav navbar-right">
             <li>
@@ -378,18 +378,33 @@
       </nav>
       <div class="timeline_box">
         <div id="flex_box1">
-          <div class="time_box" id="date"><bold></bold></div>
+          <div class="time_box" id="date"></div>
           <?php
+          
+            $H = (int)date("H");
 
-          $H = (int)date("H") - 2;
+            if($H == 0){
+              $HP = 22;
+            }elseif($H == 1){
+              $HP = 23;
+            }else{
+              $HP = $H - 2;
+            }
+               
+            for($i = 0; $i < 5; $i++){
+              if($HP == 24){
+                $HP = 0;
+              }
 
-          for($i = 0; $i < 5; $i++){
+              if($HP < 10){
+                echo "<div class=\"time_interval\">0$HP:00</div><br>";
+              }else {
+                echo "<div class=\"time_interval\">$HP:00</div><br>";
+              }
+              $HP++;   
+            }
 
-            echo "<div class=\"time_interval\">$H:00</div><br>";
-            $H++;   
-          }
-
-?>
+          ?>
         </div>
         <div id="flex_box2">
           <div class="time_box" style="display:inline-block; padding:2%; padding-left:7%;">Filmi</div>
