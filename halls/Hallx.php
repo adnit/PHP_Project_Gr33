@@ -415,6 +415,11 @@
           </form>
           </div>
         </div>
+        <div id="flex_box3">
+          <div class="event_box"><a href="#" class="button_event">Events Incoming</a></div>
+          <div class="movie_box"><a href="#" class="button_event">All Movies</a></div>
+        </div>
+       
       </div>
 
       <div class="box2-area">

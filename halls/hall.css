@@ -35,7 +35,28 @@
       padding-left: 5%;
       color : white;
   }
-
+  .event_box {
+    margin-top: 4px;
+    margin-left: 5%;
+    height: 90%;
+    width: 30%;
+    border: 1px solid black;
+    border-radius: 2px;
+    font-size: 19px;
+    color: white;
+    text-align: center;
+  }
+  .movie_box {
+  margin-top: 4px;
+  margin-left: 30%;
+  height: 90%;
+  width: 30%;
+  border: 1px solid black;
+  border-radius: 2px;
+  font-size: 19px;
+  color: white;
+  text-align: center;
+  }
   #flex_box1 {
     display: flex;
     height: 20%;
@@ -45,8 +66,12 @@
       display: flex;
       height: 25%;
   }
+  #flex_box3 {
+    margin-top: 5%;
+    display: flex;
+    height: 25%;
+}
   a.button_movie{
-
     width : 100%;
     height:100%;
     padding: 0.2em 1.45em;
@@ -120,3 +145,32 @@
         box-shadow: 1px 4px 5px rgb(92, 90, 90);
         border-radius : 4px;       
       }
+      a.button_event{
+        width : 100%;
+        height:100%;
+        padding: 0.2em 1.45em;
+        border: 0.12em solid #3720bd;
+        box-sizing: border-box;
+        text-decoration: none;
+        font-family: 'Segoe UI','Roboto',sans-serif;
+        font-weight: 400;
+        color: #fffefe;
+        background-color:#113995;
+        align-items: center;
+        padding-left: 17%;
+        font-size: 19px;
+        display: flex;
+        position: relative;
+        }
+        a.button_event:hover{
+        border-color:#3468e2;
+        }
+        a.button_event:active{
+        background-color:#2374aa;
+        }
+        
+        @media all and (max-width:30em){
+         a.button_event{
+        display: block;
+        margin: 0.2em auto;}
+        }
