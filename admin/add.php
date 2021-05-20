@@ -1,4 +1,6 @@
 <?php
+
+  
   require_once('connect.php');
   $emri = $_POST["emri"];
   $runtime = $_POST["runtime"];
@@ -13,23 +15,14 @@
   $imdbrating = $_POST["imdbMovieRating"];
   $poster = $_POST["photo"];
   $isSlideshowInput = $_POST["slideshow"];
-  echo strval($isSlideshow);
   $isSlideshow = ($isSlideshowInput == "Po");
-
-  echo strval($isSlideshow);
-
-
 
   $imdbrating = doubleval($imdbrating);  
   
   $sqlQ = "INSERT INTO Movies(Slideshow, Poster, Viti, Emri, Gjatesia, Zhanri, Regjisor, Aktoret, Plot, ImdbId, ImdbRating, Studio, BoxOffice) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
   $sqlI = $con->prepare($sqlQ);
-  $status = $sqlI->execute([$isSlideshow, $poster, $release_date, $emri, $runtime, $genre, $director, $actors, $plot, $imdbid, $imdbrating, $studio, $boxoffice]);
-  
-  if ($status) {
-   echo 'Movie '.$emri.' inserted';
-    } else {
-   echo 'Didnt work';
-}
-
+  $status = $sqlI->execute([(int)$isSlideshow, $poster, $release_date, $emri, $runtime, $genre, $director, $actors, $plot, $imdbid, $imdbrating, $studio, $boxoffice]);
+  if($status){
+    header('location: ../admin/add.html');
+  }
 ?>

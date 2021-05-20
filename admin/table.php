@@ -1,3 +1,7 @@
+
+<?php
+require_once('connect.php');
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,15 +10,11 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
-    <title>Dashboard - Brand</title>
+    <title>Table - Movies</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Lora"
     />
     <link
       rel="stylesheet"
@@ -24,30 +24,15 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css"
-    />
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="assets/css/styles.min.css" />
     <style>
-    .input-group li a:hover {
+          .input-group li a:hover {
   cursor: pointer;
-}
-.row > *{
-  width: 33%;
-}
-.card > picture > img{
-  margin-left: 0.7rem;
-}
-.card-title{
-  text-align: center;
 }
 #results {
   z-index: 99;
 
-  backdrop-filter: blur(150px);
+  backdrop-filter: blur(50px);
 
   width: 250px;
   position: absolute;
@@ -69,30 +54,27 @@
   width: 100px;
   object-fit: cover;
   border-radius: 3px;
-  margin-left: -0.7rem;
   }
 
 .mvtitle {
   float: right;
   vertical-align: middle;
   margin: 8% 0;
-  font-size: 0.7rem;
-  margin-left: 0.7rem;
   }
 
 #results a {
-  color: rgb(0, 0, 0);
+  color: var(--text-color);
   float: left;
   margin-bottom: 0%;
   width: fit-content;
   text-decoration: none;
   }
 #results a:visited {
-  color: rgb(0, 0, 0);
+  color: var(--text-color);
   }
   #searchmovie {
   background-image: url(/images/searchIcon.png);
-  color: rgb(0, 0, 0);
+  color: var(--text-color);
   background-position: 96% 6px;
   background-size: 23px;
   padding: 3% 5% 3% 5%;
@@ -114,11 +96,6 @@
   width: 100%;
   padding: 3% 5% 3% 5%;
   border: 1px solid #d6d6d6;
-}
-.card > picture > img{
-  height: 250px;
-  width: 300px;
-  object-fit: cover;
 }
     </style>
   </head>
@@ -146,36 +123,35 @@
             "
             href="#"
             ><div class="sidebar-brand-icon rotate-n-15">
-              <i class="material-icons">local_movies</i>
+              <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3"><span>kinofiek</span></div></a
+            <div class="sidebar-brand-text mx-3"><span>Brand</span></div></a
           >
           <hr class="sidebar-divider my-0" />
           <ul class="navbar-nav text-light" id="accordionSidebar">
             <li class="nav-item">
-              <a class="nav-link active" href="index.html"
-                ><i class="fas fa-tachometer-alt"></i><span>Ballina</span></a
+              <a class="nav-link" href="index.html"
+                ><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="evente.html"
-                ><i class="fas fa-user"></i><span>Evente</span></a
+              <a class="nav-link" href="profile.html"
+                ><i class="fas fa-user"></i><span>Profile</span></a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="sallat.html"
-                ><i class="fas fa-table"></i><span>Sallat</span></a
+              <a class="nav-link active" href="table.html"
+                ><i class="fas fa-table"></i><span>Table</span></a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="kontakto.html"
-                ><i class="far fa-user-circle"></i><span>Kontakti</span></a
+              <a class="nav-link" href="login.html"
+                ><i class="far fa-user-circle"></i><span>Login</span></a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="about%20EDIT!!!.html"
-                ><i class="fas fa-user-circle"></i
-                ><span>Rreth kinemase tone</span></a
+              <a class="nav-link" href="register.html"
+                ><i class="fas fa-user-circle"></i><span>Register</span></a
               >
             </li>
           </ul>
@@ -245,20 +221,6 @@
                     "
                     aria-labelledby="searchDropdown"
                   >
-                    <form class="me-auto navbar-search w-100">
-                      <div class="input-group">
-                        <input
-                          class="bg-light form-control border-0 small"
-                          type="text"
-                          placeholder="Search for ..."
-                        />
-                        <div class="input-group-append">
-                          <button class="btn btn-primary py-0" type="button">
-                            <i class="fas fa-search"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </form>
                   </div>
                 </li>
                 <li class="nav-item dropdown no-arrow mx-1">
@@ -503,229 +465,54 @@
             </div>
           </nav>
           <div class="container-fluid">
-            <div
-              class="d-sm-flex justify-content-between align-items-center mb-4"
-            >
-              <h3 class="text-dark mb-0">Ballina</h3>
-            </div>
-            <div class="card shadow mb-4">
-              <div
-                class="
-                  card-header
-                  d-flex
-                  justify-content-between
-                  align-items-center
-                "
-              >
-                <h6 class="text-primary fw-bold m-0">
-                  Filmat me te shikuar kete jave
-                </h6>
+            <h3 class="text-dark mb-4">Movies</h3>
+            <div class="card shadow">
+              <div class="card-header py-3">
+                <p class="text-primary m-0 fw-bold">Movies List</p>
               </div>
-              <div class="card-body" style="object-fit: contain">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6 text-nowrap">
+                    <div
+                      id="dataTable_length"
+                      class="dataTables_length"
+                      aria-controls="dataTable"
+                    >
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div
+                      class="text-md-end dataTables_filter"
+                      id="dataTable_filter"
+                    >
+                    </div>
+                  </div>
+                </div>
                 <div
-                  class="carousel slide"
-                  data-bs-ride="carousel"
-                  id="carousel-1"
-                  style="height: 509.7px"
+                  class="table-responsive table mt-2"
+                  id="dataTable"
+                  role="grid"
+                  aria-describedby="dataTable_info"
                 >
-                  <div class="carousel-inner" style="height: 100%">
-                    <!-- <div class="carousel-item active" style="height: 100%">
-                      <img
-                        class="w-100 d-block"
-                        src="assets/img/dogs/image2.jpeg"
-                        alt="Slide Image"
-                        style="height: 100%"
-                      />
-                    </div>
-                    <div class="carousel-item" style="height: 100%">
-                      <img
-                        class="w-100 d-block"
-                        src="assets/img/dogs/image3.jpeg"
-                        alt="Slide Image"
-                        style="height: 100%"
-                      />
-                    </div>
-                    <div class="carousel-item">
-                      <img
-                        class="w-100 d-block"
-                        src="the-hobbit-the-desolation-of-smaug-2013-movie-banner-poster.jpg"
-                        alt="Slide Image"
-                      />
-                    </div> -->
-                  </div>
-                  <div>
-                    <a
-                      class="carousel-control-prev"
-                      href="#carousel-1"
-                      role="button"
-                      data-bs-slide="prev"
-                      ><span class="carousel-control-prev-icon"></span
-                      ><span class="visually-hidden">Previous</span></a
-                    ><a
-                      class="carousel-control-next"
-                      href="#carousel-1"
-                      role="button"
-                      data-bs-slide="next"
-                      ><span class="carousel-control-next-icon"></span
-                      ><span class="visually-hidden">Next</span></a
-                    >
-                  </div>
-                  <ol class="carousel-indicators">
-                    <li
-                      data-bs-target="#carousel-1"
-                      data-bs-slide-to="0"
-                      class="active"
-                    ></li>
-                    <li data-bs-target="#carousel-1" data-bs-slide-to="1"></li>
-                    <li data-bs-target="#carousel-1" data-bs-slide-to="2"></li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-            <div class="card shadow mb-4">
-              <div
-                class="
-                  card-header
-                  d-flex
-                  justify-content-between
-                  align-items-center
-                "
-              >
-                <h6 class="text-primary fw-bold m-0">Katalogu</h6>
-                <div class="dropdown no-arrow">
-                  <button
-                    class="btn btn-link btn-sm dropdown-toggle"
-                    aria-expanded="false"
-                    data-bs-toggle="dropdown"
-                    type="button"
-                  >
-                    <i class="fas fa-ellipsis-v text-gray-400"></i>
-                  </button>
-                  <div
-                    class="
-                      dropdown-menu
-                      shadow
-                      dropdown-menu-end
-                      animated--fade-in
-                    "
-                  >
-                    <p class="text-center dropdown-header">dropdown header:</p>
-                    <a class="dropdown-item" href="#">&nbsp;Action</a
-                    ><a class="dropdown-item" href="#">&nbsp;Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#"
-                      >&nbsp;Something else here</a
-                    >
-                  </div>
-                </div>
-              </div>
-              <div class="card-body" style="object-fit: contain">
-                <div>
-                  <ul class="nav nav-pills nav-justified" role="tablist">
-                    <li class="nav-item" role="presentation">
-                      <a
-                        class="nav-link active"
-                        role="tab"
-                        data-bs-toggle="pill"
-                        href="#tab-1"
-                        >Action</a
-                      >
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <a
-                        class="nav-link"
-                        role="tab"
-                        data-bs-toggle="pill"
-                        href="#tab-2"
-                        >Comedy</a
-                      >
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <a
-                        class="nav-link"
-                        role="tab"
-                        data-bs-toggle="pill"
-                        href="#tab-3"
-                        >Romance</a
-                      >
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <a
-                        class="nav-link"
-                        role="tab"
-                        data-bs-toggle="pill"
-                        href="#tab-8"
-                        >Thriller</a
-                      >
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <a
-                        class="nav-link"
-                        role="tab"
-                        data-bs-toggle="pill"
-                        href="#tab-7"
-                        >Mystery</a
-                      >
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <a
-                        class="nav-link"
-                        role="tab"
-                        data-bs-toggle="pill"
-                        href="#tab-6"
-                        >Drama</a
-                      >
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <a
-                        class="nav-link"
-                        role="tab"
-                        data-bs-toggle="pill"
-                        href="#tab-5"
-                        >Documentary</a
-                      >
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <a
-                        class="nav-link"
-                        role="tab"
-                        data-bs-toggle="pill"
-                        href="#tab-4"
-                        >Sport</a
-                      >
-                    </li>
-                  </ul>
-                  <div class="tab-content">
-                    <div class="tab-pane active" role="tabpanel" id="tab-1">
-                        <script
-                          async=""
-                          src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"
-                          integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D"
-                          crossorigin="anonymous"
-                        ></script>
-                    </div>
-                    <div class="tab-pane" role="tabpanel" id="tab-2">
-                      <p>Content for tab 2.</p>
-                    </div>
-                    <div class="tab-pane" role="tabpanel" id="tab-3">
-                      <p>Content for tab 3.</p>
-                    </div>
-                    <div class="tab-pane" role="tabpanel" id="tab-8">
-                      <p>Tab content.</p>
-                    </div>
-                    <div class="tab-pane" role="tabpanel" id="tab-7">
-                      <p>Tab content.</p>
-                    </div>
-                    <div class="tab-pane" role="tabpanel" id="tab-6">
-                      <p>Tab content.</p>
-                    </div>
-                    <div class="tab-pane" role="tabpanel" id="tab-5">
-                      <p>Tab content.</p>
-                    </div>
-                    <div class="tab-pane" role="tabpanel" id="tab-4">
-                      <p>Tab content.</p>
-                    </div>
-                  </div>
+                  <table class="table my-0" id="dataTable">
+                    <thead>
+                      <tr>
+                        <th>Movie Name</th>
+                        <th>Studio</th>
+                        <th>Year</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+            $query = $con -> prepare('Select * from movies order by createdat desc');
+            $query -> execute();
+            while($movie = $query ->fetch(PDO::FETCH_ASSOC)){
+              echo '<tr><td><a href="EditMovie?'.$movie["MovieId"].'"><img class="rounded-circle me-2" width="30" height="30" src="'.$movie["Poster"].'">'.$movie["Emri"].'<br></a></td><td>'.$movie["Studio"] .'</td>
+              <td>'.$movie['Viti'] .'</td></tr>';
+          }
+                      ?>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -743,61 +530,23 @@
         ><i class="fas fa-angle-up"></i
       ></a>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script>
-    <script src="./assets/js/script.min.js"></script>
-    <script src="./assets/js/setmovieid.js"></script>
     <script>
-    $(document).ready(function(){
-      var kategoria = "Action";
-      $.ajax({
-        type:"GET",
-        url: './php/catalog.php',
-        data: 'txt='+kategoria,
-        success: function(data){
-          $('#tab-1').append(data);
-        }
-      })
-    })
-    $(".nav-link").click(function () {
-        $(".nav-link").removeClass("active");
-        $(this).addClass("active");
-        var id = $(this).prop('href');
-        var kategoria = $(this).text();
-        var t = id.split("#");
-        $(".tab-pane").removeClass("active");
-        $('#'+ t[1]).addClass("active");
-        $(".tab-pane").empty();
-        $.ajax({
-          type: "GET",
-          url: './php/catalog.php',
-          data: 'txt=' + kategoria,
-          success: function(data){
-            $('#'+ t[1]).append(data);
-          }
-        })
-    });
     $('#searchmovie').keyup(function(){
             var text = $(this).val();
             $('#results').html(" ");
             if( text != ""){
             $.ajax({
                 type: "GET",
-                url: './php/search.php',
+                url: '../php/search.php',
                 data: 'txt=' + text,
                 success: function(data){
                     $('#results').append(data);
                 }
             })
             }});
-      $('document').ready(function(){
-        $.ajax({
-                type: "GET",
-                url: './php/slideshow.php',
-                success: function(data){
-                    $('.carousel-inner').append(data);
-                }
-            })
-            });
-    </script>
+            </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+    <script src="assets/js/script.min.js"></script>
   </body>
 </html>

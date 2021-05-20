@@ -1,3 +1,7 @@
+<?php
+
+include 'connect.php';
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -402,7 +406,7 @@
                 </div>
                 <hr class="modern-form__hr" />
                 <div class="modern-form__form-container">
-                  <form action="./php/contact.php" method="POST">
+                  <form action="" method="POST">
                     <div class="row">
                       <div class="col col-contact">
                         <div
@@ -476,6 +480,49 @@
                   </form>
                 </div>
               </div>
+              <?php
+    if(isset($_POST["submit"])){
+      try{
+          $firstname = $_POST['FirstName'];
+          $email = $_POST['Email'];
+          $message = $_POST['Message'];
+          $test = "insert into Contact(FirstName,Email,Message) Values(:firstname, :email,:message)";
+          $query = $con -> prepare($test);
+          $query -> execute([
+          ":firstname" => $firstname,
+          ":email" => $email,
+          ":message" => $message
+          ]);
+      }
+          catch(PDOException $e){
+          die('Error' . $e->getMessage());
+          }
+          catch (Exception $e) {
+          die('General Error: '.$e->getMessage());
+          }
+          try {
+              $subject = 'No Reply-KinoFiek';
+              $message =
+              '<html><body>
+              <h3>Pershendetje ' . $firstname . ",</h3>". '<p>Ne kemi pranuar mesazhin tuaj dhe me ane te kesaj emaile ju informojme qe do te pergjigjjemi ne kerkesen tuaj ne kohen me te shpejte te mundur.</p>
+              <p>Faleminderit qe gjetet kohen per te na kontaktuar.</p>
+              <h3>Kjo eshte nje email e automatizuar, ju lutemi mos beni reply.</h3></body></html>';
+              ;
+              $headers = 'From:kinofiek@gmail.com' . "\r\n";
+              $headers .= "MIME-Version: 1.0\r\n";
+              $headers .= "Content-Type: text/html; charset=utf-8\r\n";
+              if (mail($email, $subject, $message, $headers)) {
+                echo '<h4 style="text-align:center">Te dhenat u derguan me sukses!</h4>';
+              }
+              else{
+                  echo '<h4 style="text-align:center">Pati nje gabim gjate dergimit te te dhenave. Ju lutem ridergoni te dhenat perseri.</h4>';
+              }
+          }
+          catch (Exception $e) {
+              echo $e->getMessage();
+          }
+      }
+      ?>
             </section>
           </div>
         </div>
@@ -493,10 +540,6 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/script.min.js"></script>
-    <script>
-      $('form').submit(function(){
-        alert("Te dhenat jane derguar me sukses.")
-      })
-    </script>
+
   </body>
 </html>
