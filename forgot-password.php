@@ -22,35 +22,19 @@ if(isset($_POST['username'])){
     if($sqlInsert->execute([$username, $hash, 0, $expirydate])){
       $website = "localhost";
       $sql = "UPDATE users SET ResetHash=? WHERE Username=?";
-      $con->prepare($sql)->execute([$hash, $username]);
-      $subject = 'Reset Password | Request';
-      $message =
-      '
-      <html>
-      <body>
-      <img style="width:100%; height:200px; object-fit:contain" src = "https://kinofiek.online/images/KinoFiekMetaData.png"> <hr>
-      Pershendetje <strong>' . $username . '</strong>,<br>
-      Keni kerkuar qe te resetoni fjalekalimin e llogarise tuaj, klikoni linkun me poshte per te resetuar fjalekalimin tuaj<br>
-      <h3> Kliko <strong><a href = "' .$website. '/reset.php?username='. $username . '&hash=' . $hash . '">ketu</a></strong>. </h3>
-      <hr>
-      Nese linku me larte nuk funksionon kopjoni kete link ne browserin tuaj: <a href="' .$website. '/reset.php?username='. $username . '&hash=' . $hash . '">localhost/reset.php?username='. $username . '&hash=' . $hash . '</a>
-      </body>
-      </html>
-      ';
-      $headers = 'From:adnitk01@gmail.com' . "\r\n";
-      $headers .= "MIME-Version: 1.0\r\n";
-      $headers .= "Content-Type: text/html; charset=utf-8\r\n";
-      if (mail($email, $subject, $message, $headers)) {
+      
+
+      if($con->prepare($sql)->execute([$hash, $username])){
+        require "sendmail.php";
+      $newuser = new \SendEmail($email);
+      if($newuser->sendReset($username,$hash)){
+        unset($newuser);
         $_SESSION['resetSuccess'] = 'Yes';
         header("location: ./intro.php");
-      } else {
-        $_SESSION['resetError'] = 'Emaili nuk u dergua kontakto info@kinofiek.com';
-      }
-      }
-    }
-    
-
-    
+      }else{
+      $_SESSION['resetError'] = 'Emaili nuk u dergua kontakto info@kinofiek.com';
+      }}}
+  }
 }
 ?>
 <!DOCTYPE html>

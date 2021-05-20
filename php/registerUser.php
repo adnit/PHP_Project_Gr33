@@ -163,39 +163,17 @@
       $sqlInsert->bindParam(':avatar', $avatar);
 
       $sqlInsert->execute();
-      $subject = 'Signup | Verification';
 
-      $message =
-        '
-          <html>
-          <body>
-          <img style="width:100%; height:200px; object-fit:contain" src = "https://kinofiek.online/images/KinoFiekMetaData.png"> <hr>
-          Pershendetje <strong>' . $username . '</strong>, faleminderit qe u regjistruat ne KinoFIEK! <br><br>
-          Llogaria juaj eshte krijuar, per te perdorur te gjitha sherbimet e kinemase tone ju duhet
-          verifikoni accountin tuaj duke klikuar linkun me poshte. <br>
-          Keto jane te dhenat tuaja: <br>
-          ++++++++++++++++++++++++ <br>
-          email:   ' . $email . ' <br>
-          username:' . $username . ' <br> 
-          ++++++++++++++++++++++++ <br>
-          <h3> Kliko <strong><a href = "' . $website . '/verify.php?email=' . $email . '&hash=' . $hash . '">ketu</a></strong>. </h3>
-          <hr>
-          Nese linku me larte nuk funksionon kopjoni kete link ne browserin tuaj: <a href="' . $website . '/verify.php?email=' . $email . '&hash=' . $hash . '">http://www.adnit.com/verify.php?email=' . $email . '&hash=' . $hash . '</a>
-          </body>
-          </html>
-          ';
-      $headers = 'From:adnitk01@gmail.com' . "\r\n";
-      $headers .= "MIME-Version: 1.0\r\n";
-      $headers .= "Content-Type: text/html; charset=utf-8\r\n";
+    if($sqlInsert->execute()){
+      require "sendmail.php";
+      $newuser = new \SendEmail($email);
+      if($newuser->sendVerify($username,$hash)){
+        unset($newuser);
+        $_SESSION['justRegistered'] = 'Po';
+        header('location: ../intro.php');
+      }else{
+      echo "Dergimi i email deshtoi kontakto kinofiek@gmail.com";
+    }}}}}
 
-      if (mail($email, $subject, $message, $headers)) {
-      } else {
-        echo "Email sending failed...";
-        echo $message;
-      }
-      $_SESSION['justRegistered'] = 'Po';
-      header('location: ./intro.php');
-    }
-    }
-  }
-  ?>
+
+?>
