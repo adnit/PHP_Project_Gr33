@@ -227,7 +227,7 @@
                     </h3>
                   </div>
                   <div class="card-body" style="height: auto">
-                    <ul class="list-group">
+                    <ul class="list-group" id="addcomments">
                       <li class="list-group-item" style="margin-bottom: 6px">
                         <div class="d-flex media">
                           <div></div>
@@ -317,8 +317,64 @@
                           </div>
                         </div>
                       </li>
+                     <?php
+                      if(!(isset($_SERVER['QUERY_STRING']))){
+                      header("location: ./intro.php");
+                      }else{
+                      $movie = $_SERVER['QUERY_STRING'];
+                      $movie = explode('-',$movie);
+                      $movieName = "";
+                      if(sizeof($movie) < 1){
+                      header("location: ./login.php");
+                    }
+                    for ($i=0; $i < count($movie) - 1; $i++) { 
+                      $movieName.= $movie[$i].' ';
+                    }
+                    $movieYear = end($movie);
+                    $movieName = trim($movieName);
+                    $sql = 'SELECT c.CommentText,c.CommentTime,u.Username,u.UserAvatar from Movies m,Comment c,Users u where c.MovieId=m.MovieId and m.Emri=? and m.Viti=? and c.UserId=u.UserId';
+                    $get_query = $con->prepare($sql);
+                    $get_query->execute([$movieName, $movieYear]);}
+                    while($movie = $get_query ->fetch(PDO::FETCH_ASSOC)){
+                      echo '<li class="list-group-item" style="margin-bottom:6px">
+                            <div class="d-flex-media"><div></div>
+                            <div class="media-body">
+                            <div class="d-flex media" style="overflow:visible">
+                            <div>
+                            <img class="mr-3" style="width:25px;height:25px" src="'.$movie["UserAvatar"].
+                            '"></div><div style="overflow:visible" class="media-body">
+                            <div class="row"><div class="col-md-12"><p class="text-break"><a href="#">
+                            '.$movie["Username"].':&nbsp;</a> '.$movie["CommentText"].'
+                            <br/><small class="text-muted">'.$movie["CommentTime"].'
+                            </small></div></p></div></div></div> </div></div>
+                      </li>';
+                    }
+                    ?> 
                     </ul>
+                    <br>
+                    <div class="row">
+                    <div class="col col-contact">
+                        <div
+                          class="
+                            modern-form__form-group--padding-r
+                            form-group
+                            mb-3
+                          "
+                        >
+                          <input
+                          id="commenttext"
+                            class="form-control input input-tr"
+                            type="text"
+                            name="CommentText"
+                            placeholder="Your Comment..."
+                            required
+                          />
+                          <div class="line-box"><div class="line"></div></div>
+                        </div>
+                      </div>
+                    </div>
                     <button
+                    id="commentbutton"
                       class="btn btn-light"
                       style="margin-left: 629px; margin-top: 0px"
                       type="button"
@@ -360,6 +416,19 @@
                 }
             })
             }});
+            $('#commentbutton').click(function(){
+              var text = $(this).val();
+              if(text !=""){
+                $.ajax({
+                  type: "GET",
+                  url: './php/comment.php',
+                  data: 'txt=' + text,
+                  success: function(data){
+                    $('#addcomment').append(data);
+                  }
+                })
+              }
+            })
     </script>
 
   </body>

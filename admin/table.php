@@ -29,7 +29,7 @@ require_once('connect.php');
   </head>
   <body id="page-top">
     <div id="wrapper">
-      <nav
+    <nav
         class="
           navbar navbar-dark
           align-items-start
@@ -63,22 +63,22 @@ require_once('connect.php');
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="profile.html"
+              <a class="nav-link active" href="profile.html"
                 ><i class="fas fa-user"></i><span>Profile</span></a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="table.html"
+              <a class="nav-link" href="table.html"
                 ><i class="fas fa-table"></i><span>Table</span></a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../login.php"
+              <a class="nav-link" href="login.html"
                 ><i class="far fa-user-circle"></i><span>Login</span></a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../register.php"
+              <a class="nav-link" href="register.html"
                 ><i class="fas fa-user-circle"></i><span>Register</span></a
               >
             </li>
@@ -124,11 +124,12 @@ require_once('connect.php');
               >
                 <div class="input-group">
                   <input
-                  id="searchmovie"
                     class="bg-light form-control border-0 small"
                     type="text"
-                    placeholder="Kerkoni Filmin"
-                  />
+                    placeholder="Search for ..."
+                  /><button class="btn btn-primary py-0" type="button">
+                    <i class="fas fa-search"></i>
+                  </button>
                 </div>
               </form>
               <ul class="navbar-nav flex-nowrap ms-auto">
@@ -148,6 +149,20 @@ require_once('connect.php');
                     "
                     aria-labelledby="searchDropdown"
                   >
+                    <form class="me-auto navbar-search w-100">
+                      <div class="input-group">
+                        <input
+                          class="bg-light form-control border-0 small"
+                          type="text"
+                          placeholder="Search for ..."
+                        />
+                        <div class="input-group-append">
+                          <button class="btn btn-primary py-0" type="button">
+                            <i class="fas fa-search"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                 </li>
                 <li class="nav-item dropdown no-arrow mx-1">
