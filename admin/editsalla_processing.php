@@ -18,7 +18,7 @@ $count->bindParam(":sallaid",$Salla_id);
 $count->execute();
 $no=$count->rowCount();
 
-if($no >0 ){
+if($no > 0){
 $msg=$msg."Salla me ID të tillë tashmë ekziston. Regjistroni sallë me ID tjetër.<br>";
 $status= "NOTOK";
 }
@@ -28,7 +28,7 @@ $count->bindParam(":salla_name",$Salla_name);
 $count->execute();
 $no=$count->rowCount();
 
-if($no >0 ){
+if($no > 0){
     $msg=$msg."Salla me emër të tillë tashmë ekziston. Regjistroni sallë me emër tjetër.<br>";
     $status= "NOTOK";
 }
