@@ -25,79 +25,7 @@ require_once('connect.php');
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css" />
-    <style>
-          .input-group li a:hover {
-  cursor: pointer;
-}
-#results {
-  z-index: 99;
-
-  backdrop-filter: blur(50px);
-
-  width: 250px;
-  position: absolute;
-  list-style-type: none;
-  margin-top: 45px;
-  border-radius: 4px;
-  border-top: 0px;
-  }
-
-#results li {
-  display: flex;
-  flex-direction: column;
-  margin: 3px;
-  }
-
-#results img {
-  float: left;
-  height: 50px;
-  width: 100px;
-  object-fit: cover;
-  border-radius: 3px;
-  }
-
-.mvtitle {
-  float: right;
-  vertical-align: middle;
-  margin: 8% 0;
-  }
-
-#results a {
-  color: var(--text-color);
-  float: left;
-  margin-bottom: 0%;
-  width: fit-content;
-  text-decoration: none;
-  }
-#results a:visited {
-  color: var(--text-color);
-  }
-  #searchmovie {
-  background-image: url(/images/searchIcon.png);
-  color: var(--text-color);
-  background-position: 96% 6px;
-  background-size: 23px;
-  padding: 3% 5% 3% 5%;
-  background-color: var(--search-bg);
-  box-sizing: border-box;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 1.1em;
-  background-repeat: no-repeat;
-  width: 100%;
-  transition: width 0.4s ease-in-out;
-}
-
-#searchmovie:hover {
-  width: 100%;
-  padding: 3% 5% 3% 5%;
-}
-#searchmovie:focus {
-  width: 100%;
-  padding: 3% 5% 3% 5%;
-  border: 1px solid #d6d6d6;
-}
-    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>
   <body id="page-top">
     <div id="wrapper">
@@ -201,7 +129,6 @@ require_once('connect.php');
                     type="text"
                     placeholder="Kerkoni Filmin"
                   />
-                  <ul id="results"></ul>
                 </div>
               </form>
               <ul class="navbar-nav flex-nowrap ms-auto">
@@ -502,15 +429,7 @@ require_once('connect.php');
                         <th>Year</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <?php
-            $query = $con -> prepare('Select * from movies order by createdat desc');
-            $query -> execute();
-            while($movie = $query ->fetch(PDO::FETCH_ASSOC)){
-              echo '<tr><td><a href="EditMovie?'.$movie["MovieId"].'"><img class="rounded-circle me-2" width="30" height="30" src="'.$movie["Poster"].'">'.$movie["Emri"].'<br></a></td><td>'.$movie["Studio"] .'</td>
-              <td>'.$movie['Viti'] .'</td></tr>';
-          }
-                      ?>
+                    <tbody id="tablebody1">
                     </tbody>
                   </table>
                 </div>
@@ -533,17 +452,35 @@ require_once('connect.php');
     <script>
     $('#searchmovie').keyup(function(){
             var text = $(this).val();
-            $('#results').html(" ");
+            $('#tablebody1').html(" ");
             if( text != ""){
             $.ajax({
                 type: "GET",
-                url: '../php/search.php',
+                url: '../php/getmoviestable.php',
                 data: 'txt=' + text,
                 success: function(data){
-                    $('#results').append(data);
+                    $('#tablebody1').append(data);
                 }
             })
-            }});
+            }
+          else{
+            $.ajax({
+              type: "GET",
+              url: '../php/getallmoviestable.php',
+              success: function(data){
+                  $('#tablebody1').append(data);
+              }
+            })
+          }});
+          $(document).ready(function(){
+            $.ajax({
+              type: "GET",
+              url: '../php/getallmoviestable.php',
+              success: function(data){
+                  $('#tablebody1').append(data);
+              }
+            })
+          })
             </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta3/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
