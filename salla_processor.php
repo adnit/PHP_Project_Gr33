@@ -1,5 +1,5 @@
 <?php
-require_once('db_salla-connect.php');
+require_once('./admin/db_salla-connect.php');
 
 
 $hall_id = $_GET['hallid'];
@@ -18,5 +18,10 @@ foreach($rows as $row) {
 
 
 }
+
+
+$counter=$conn->prepare("SELECT SallaId FROM Salla");
+$counter->execute();
+$nr=$counter->rowCount();
 
 ?>
