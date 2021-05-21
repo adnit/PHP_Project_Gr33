@@ -1,97 +1,6 @@
 <?php
-  require_once("./php/session.php");
-  require_once('./php/connect.php');
-
-  if(!(isset($_SERVER['QUERY_STRING']))){
-    header("location: ./intro.php");
-  }else{
-    $movie = $_SERVER['QUERY_STRING'];
-    $movie = explode('-',$movie);
-    $movieName = "";
-    if(sizeof($movie) < 1){
-      header("location: ./login.php");
-    }
-    for ($i=0; $i < count($movie) - 1; $i++) { 
-      $movieName.= $movie[$i].' ';
-    }
-    $movieYear = end($movie);
-    $movieName = trim($movieName);
-    $sql = 'SELECT `Poster`, `Viti`, `Emri`, `Gjatesia`, `Zhanri`, `Regjisor`, `Aktoret`, `Plot`, `ImdbId`, `ImdbRating`, `Studio`, `BoxOffice` from Movies where Emri=? and Viti=?';
-    $getmovie = $con->prepare($sql);
-    $getmovie->execute([$movieName, $movieYear]);
-    $result = $getmovie->fetch(PDO::FETCH_ASSOC);
-    if(!$result){
-      header("location: /login.php");
-    }else{
-      $sqlalgo = "SELECT `Poster`, `Emri`, `Viti` FROM `movies` WHERE `Zhanri` LIKE CONCAT('%', :zhanri, '%')";
-      $recmovies = $con->prepare($sqlalgo);
-      $movie = str_replace(' ', '',$result['Zhanri']);
-      $movie = explode(',',$movie);
-      // $randCat = $movie[array_rand($movie)];
-      $randCat = 'Action';
-      $recmovies->bindParam(':zhanri', $randCat);
-      $recmovies->execute();
-      $recResults = $recmovies->fetchAll(PDO::FETCH_ASSOC);
-      if(count($recResults)==1){
-        $rand_keys = array('0' => $recResults[0]);
-      }else{
-        $numResults = count($recResults) > 4 ? 4 : count($recResults);
-        $rand_keys = array_rand($recResults, $numResults);
-      }
-
-
-    }
-  }
-?>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-    />
-    <title><?php echo ''.$result['Emri'].'('.$result['Viti'].') - KinoFiek'.''?></title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Lora"
-    />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"
-    />
-    <style>
-      .col-sm-6 img{
-        height: 400px !important; 
-        width: 100% !important;
-        object-fit: cover;
-      }
-      .col-md-8 {
-        width: auto !important;
-      }
-      .col-md-4 {
-        width: 70% !important;
-      }
-    </style>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css"
-    />
-    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css" />
-    <link rel="stylesheet" href="assets/css/styles.min.css" />
-  </head>
-  <body id="page-top">
-    <div id="wrapper">
-      <nav
+require_once('./php/session.php'); 
+echo '<nav
         class="
           navbar navbar-dark
           align-items-start
@@ -120,22 +29,22 @@
           <hr class="sidebar-divider my-0" />
           <ul class="navbar-nav text-light" id="accordionSidebar">
             <li class="nav-item">
-              <a class="nav-link" href="index.html"
+              <a id="ballina" class="nav-link" href="index.php"
                 ><i class="fas fa-tachometer-alt"></i><span>Ballina</span></a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="evente.html"
+              <a id="eventet"  class="nav-link" href="eventet.php"
                 ><i class="fas fa-user"></i><span>Evente</span></a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="sallat.html"
+              <a id="sallat" class="nav-link" href="sallat.php"
                 ><i class="fas fa-table"></i><span>Sallat</span></a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="kontakto.html"
+              <a id="kontakto" class="nav-link" href="kontakto.php"
                 ><i class="far fa-user-circle"></i><span>Kontakti</span></a
               >
             </li>
@@ -155,6 +64,7 @@
           </div>
         </div>
       </nav>
+      
       <div class="d-flex flex-column" id="content-wrapper">
         <div id="content">
           <nav
@@ -187,12 +97,12 @@
               >
                 <div class="input-group">
                   <input
+                  id="searchmovie"
                     class="bg-light form-control border-0 small"
                     type="text"
-                    placeholder="Search for ..."
-                  /><button class="btn btn-primary py-0" type="button">
-                    <i class="fas fa-search"></i>
-                  </button>
+                    placeholder="Kerkoni Filmin"
+                  />
+                  <ul id="results"></ul>
                 </div>
               </form>
               <ul class="navbar-nav flex-nowrap ms-auto">
@@ -217,7 +127,7 @@
                         <input
                           class="bg-light form-control border-0 small"
                           type="text"
-                          placeholder="Search for ..."
+                          placeholder="Kerko filim..."
                         />
                         <div class="input-group-append">
                           <button class="btn btn-primary py-0" type="button">
@@ -288,7 +198,7 @@
                             >December 2, 2019</span
                           >
                           <p>
-                            Spending Alert: We've noticed unusually high
+                            Spending Alert: We\'ve noticed unusually high
                             spending for your account.
                           </p>
                         </div></a
@@ -331,7 +241,7 @@
                           <div class="text-truncate">
                             <span
                               >Hi there! I am wondering if you can help me with
-                              a problem I've been having.</span
+                              a problem I\'ve been having.</span
                             >
                           </div>
                           <p class="small text-gray-500 mb-0">
@@ -370,7 +280,7 @@
                         <div class="fw-bold">
                           <div class="text-truncate">
                             <span
-                              >Last month's report looks great, I am very happy
+                              >Last month\'s report looks great, I am very happy
                               with the progress so far, keep up the good
                               work!</span
                             >
@@ -394,7 +304,7 @@
                             <span
                               >Am I a good boy? The reason I ask is because
                               someone told me that people say this to all dogs,
-                              even if they aren't good...</span
+                              even if they aren\'t good...</span
                             >
                           </div>
                           <p class="small text-gray-500 mb-0">
@@ -421,12 +331,29 @@
                       aria-expanded="false"
                       data-bs-toggle="dropdown"
                       href="#"
-                      ><span class="d-none d-lg-inline me-2 text-gray-600 small"
-                        >Valerie Luna</span
+                      >
+                      ';
+                    if (isset($_SESSION["firstlast"])) {
+                      echo 
+                      '
+                        <span class="d-none d-lg-inline me-2 text-gray-600 small"
+                        >'.$_SESSION["firstlast"].'</span
                       ><img
                         class="border rounded-circle img-profile"
-                        src="assets/img/avatars/avatar1.jpeg"
-                    /></a>
+                        src="'.$_SESSION["avatar"].'"
+                    />
+                      ';
+                    }else {
+                      echo '<span class="d-none d-lg-inline me-2 text-gray-600 small"
+                        >Ju nuk jeni kyqur</span
+                      ><img
+                        class="border rounded-circle img-profile"
+                        src="assets/img/avatars/avatar-default.png"
+                    />';
+                    }
+
+                    echo '
+                    </a>
                     <div
                       class="
                         dropdown-menu
@@ -434,25 +361,36 @@
                         dropdown-menu-end
                         animated--grow-in
                       "
-                    >
-                      <a class="dropdown-item" href="#"
+                    >';
+
+                    if (isset($_SESSION["firstlast"])) {
+                      echo '
+                      <a class="dropdown-item" href="/profile.php"
                         ><i
                           class="fas fa-user fa-sm fa-fw me-2 text-gray-400"
                         ></i
                         >&nbsp;Profile</a
-                      ><a class="dropdown-item" href="#"
+                      >';
+                      if (isset($_SESSION["user_type"]) && $_SESSION["user_type"] == "ADMIN"){
+                        echo '
+                      <a class="dropdown-item" href="/admin.php"
                         ><i
-                          class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"
+                          class="
+                            fas
+                            fa-cog fa-sm fa-fw
+                            me-2
+                            text-gray-400
+                          "
                         ></i
-                        >&nbsp;Settings</a
-                      ><a class="dropdown-item" href="#"
-                        ><i
-                          class="fas fa-list fa-sm fa-fw me-2 text-gray-400"
-                        ></i
-                        >&nbsp;Activity log</a
+                        >&nbsp;Admin Panel</a
                       >
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#"
+                    ';
+                      }
+
+                        echo 
+                        '
+                        <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="/logout.php"
                         ><i
                           class="
                             fas
@@ -463,189 +401,32 @@
                         ></i
                         >&nbsp;Logout</a
                       >
-                    </div>
+                    ';
+                    
+
+                      }else {
+                      echo '
+                      <a class="dropdown-item" href="/login.php"
+                        ><i
+                          class="fas fa-key fa-sm fa-fw me-2 text-gray-400"
+                        ></i
+                        >&nbsp;Kyqu</a
+                      ><a class="dropdown-item" href="/register.php"
+                        ><i
+                          class="fas fa-clipboard-check fa-sm fa-fw me-2 text-gray-400"
+                        ></i
+                        >&nbsp;Regjistrohu</a
+                      >
+                    ';
+                    }
+
+                  echo '
                   </div>
                 </li>
               </ul>
             </div>
           </nav>
-          <div class="container">
-            <div class="row">
-              <div class="col-md-8">
-                <img
-                  class="img-fluid"
-                  src="<?php echo $result['Poster'] ?>"
-                  alt="Alt Text"
-                />
-              </div>
-              <div class="col-md-4">
-                <h3 class="my-3"><?php echo $result['Emri'] ?></h3>
-                <p>
-                  <strong>Ngjarja e filmit</strong><br /><?php echo $result['Plot'] ?>
-                </p>
-                <h3 class="my-3" style="font-size: 18.9px">Detaje tjera</h3>
-                <ul class="list-unstyled">
-                  <li class="text-break">
-                    <strong>Studio:</strong> <br /> <?php echo $result['Studio'] ?>
-                  </li>
-                  <li class="text-break"><strong>Aktoret: </strong><br /><?php echo $result['Aktoret'] ?></li>
-                  <li class="text-break"><strong>Regjisori: </strong><br /><?php echo $result['Regjisor'] ?></li>
-                  <li class="text-break"><strong>Fitime ne Box Office: </strong><br /><?php echo $result['BoxOffice'] ?></li>
-                </ul>
-              </div>
-            </div>
-            <h3 class="my-4">Filma te ngjashem<br /></h3>
-            <div class="row">
-            <?php
-              for ($i=0; $i < count($rand_keys); $i++) { 
-                $link = str_replace(' ','-',$recResults[$rand_keys[$i]]['Emri'].' '.$recResults[$rand_keys[$i]]['Viti']);
-                echo 
-                '
-                  <div class="col-sm-6 col-md-3 mb-4">
-                    <a href="/movie.php?'.$link.'">
-                    <img class="img-fluid" src="'.$recResults[$rand_keys[$i]]['Poster'].'"/>
-                    </a>
-                  </div>
-                ';
-              }
+      ';
 
-            ?>
-            </div>
-            <div class="row">
-              <div class="col">
-                <div class="card">
-                  <div class="card-header">
-                    <h3
-                      style="
-                        font-size: 22.4px;
-                        margin-bottom: 0px;
-                        height: 25px;
-                      "
-                    >
-                      Komente
-                    </h3>
-                  </div>
-                  <div class="card-body" style="height: auto">
-                    <ul class="list-group">
-                      <li class="list-group-item" style="margin-bottom: 6px">
-                        <div class="d-flex media">
-                          <div></div>
-                          <div class="media-body">
-                            <div class="d-flex media" style="overflow: visible">
-                              <div>
-                                <img
-                                  class="mr-3"
-                                  style="width: 25px; height: 25px"
-                                  src="assets/img/user-photo4.jpg"
-                                />
-                              </div>
-                              <div style="overflow: visible" class="media-body">
-                                <div class="row">
-                                  <div class="col-md-12">
-                                    <p class="text-break">
-                                      <a href="#">$komentues1:</a>&nbsp;$Komenti
-                                      i komentuesit 1. <br />
-                                      <small class="text-muted"
-                                        >August 6, 2016 @ 10:35am
-                                      </small>
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="list-group-item" style="margin-bottom: 6px">
-                        <div class="d-flex media">
-                          <div></div>
-                          <div class="media-body">
-                            <div class="d-flex media" style="overflow: visible">
-                              <div>
-                                <img
-                                  class="mr-3"
-                                  style="width: 25px; height: 25px"
-                                  src="assets/img/user-photo4.jpg"
-                                />
-                              </div>
-                              <div style="overflow: visible" class="media-body">
-                                <div class="row">
-                                  <div class="col-md-12">
-                                    <p>
-                                      <a href="#">Brennan Prill:</a> This guy
-                                      has been going 100+ MPH on side streets.
-                                      <br />
-                                      <small class="text-muted"
-                                        >August 6, 2016 @ 10:35am
-                                      </small>
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="list-group-item" style="margin-bottom: 6px">
-                        <div class="d-flex media">
-                          <div></div>
-                          <div class="media-body">
-                            <div class="d-flex media" style="overflow: visible">
-                              <div>
-                                <img
-                                  class="mr-3"
-                                  style="width: 25px; height: 25px"
-                                  src="assets/img/user-photo4.jpg"
-                                />
-                              </div>
-                              <div style="overflow: visible" class="media-body">
-                                <div class="row">
-                                  <div class="col-md-12">
-                                    <p>
-                                      <a href="#">Brennan Prill:</a> This guy
-                                      has been going 100+ MPH on side streets.
-                                      <br />
-                                      <small class="text-muted"
-                                        >August 6, 2016 @ 10:35am
-                                      </small>
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                    <button
-                      class="btn btn-light"
-                      style="margin-left: 629px; margin-top: 0px"
-                      type="button"
-                    >
-                      Add Comment
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <footer class="bg-white sticky-footer">
-          <div class="container my-auto">
-            <div class="text-center my-auto copyright">
-              <span>Copyright © Brand 2021</span>
-            </div>
-          </div>
-        </footer>
-      </div>
-      <a class="border rounded d-inline scroll-to-top" href="#page-top"
-        ><i class="fas fa-angle-up"></i
-      ></a>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/script.min.js"></script>
-    <script>
-      document.getElementById('sidebarToggle').click();
-    </script>
-  </body>
-</html>
+
+?>

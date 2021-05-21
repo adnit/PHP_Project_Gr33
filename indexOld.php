@@ -1,48 +1,3 @@
-<?php
-  require_once("./php/session.php");
-  require_once('./php/connect.php');
-
-  if(!(isset($_SERVER['QUERY_STRING']))){
-    header("location: ./intro.php");
-  }else{
-    $movie = $_SERVER['QUERY_STRING'];
-    $movie = explode('-',$movie);
-    $movieName = "";
-    if(sizeof($movie) < 1){
-      header("location: ./login.php");
-    }
-    for ($i=0; $i < count($movie) - 1; $i++) { 
-      $movieName.= $movie[$i].' ';
-    }
-    $movieYear = end($movie);
-    $movieName = trim($movieName);
-    $sql = 'SELECT `Poster`, `Viti`, `Emri`, `Gjatesia`, `Zhanri`, `Regjisor`, `Aktoret`, `Plot`, `ImdbId`, `ImdbRating`, `Studio`, `BoxOffice` from Movies where Emri=? and Viti=?';
-    $getmovie = $con->prepare($sql);
-    $getmovie->execute([$movieName, $movieYear]);
-    $result = $getmovie->fetch(PDO::FETCH_ASSOC);
-    if(!$result){
-      header("location: /login.php");
-    }else{
-      $sqlalgo = "SELECT `Poster`, `Emri`, `Viti` FROM `movies` WHERE `Zhanri` LIKE CONCAT('%', :zhanri, '%')";
-      $recmovies = $con->prepare($sqlalgo);
-      $movie = str_replace(' ', '',$result['Zhanri']);
-      $movie = explode(',',$movie);
-      // $randCat = $movie[array_rand($movie)];
-      $randCat = 'Action';
-      $recmovies->bindParam(':zhanri', $randCat);
-      $recmovies->execute();
-      $recResults = $recmovies->fetchAll(PDO::FETCH_ASSOC);
-      if(count($recResults)==1){
-        $rand_keys = array('0' => $recResults[0]);
-      }else{
-        $numResults = count($recResults) > 4 ? 4 : count($recResults);
-        $rand_keys = array_rand($recResults, $numResults);
-      }
-
-
-    }
-  }
-?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -51,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
-    <title><?php echo ''.$result['Emri'].'('.$result['Viti'].') - KinoFiek'.''?></title>
+    <title>Dashboard - Brand</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
@@ -65,19 +20,6 @@
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"
     />
-    <style>
-      .col-sm-6 img{
-        height: 400px !important; 
-        width: 100% !important;
-        object-fit: cover;
-      }
-      .col-md-8 {
-        width: auto !important;
-      }
-      .col-md-4 {
-        width: 70% !important;
-      }
-    </style>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -87,7 +29,98 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css"
     />
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="assets/css/styles.min.css" />
+    <style>
+    .input-group li a:hover {
+  cursor: pointer;
+}
+.row > *{
+  width: 33%;
+}
+.card > picture > img{
+  margin-left: 0.7rem;
+}
+.card-title{
+  text-align: center;
+}
+#results {
+  z-index: 99;
+
+  backdrop-filter: blur(150px);
+
+  width: 250px;
+  position: absolute;
+  list-style-type: none;
+  margin-top: 45px;
+  border-radius: 4px;
+  border-top: 0px;
+  }
+
+#results li {
+  display: flex;
+  flex-direction: column;
+  margin: 3px;
+  }
+
+#results img {
+  float: left;
+  height: 50px;
+  width: 100px;
+  object-fit: cover;
+  border-radius: 3px;
+  margin-left: -0.7rem;
+  }
+
+.mvtitle {
+  float: right;
+  vertical-align: middle;
+  margin: 8% 0;
+  font-size: 0.7rem;
+  margin-left: 0.7rem;
+  }
+
+#results a {
+  color: rgb(0, 0, 0);
+  float: left;
+  margin-bottom: 0%;
+  width: fit-content;
+  text-decoration: none;
+  }
+#results a:visited {
+  color: rgb(0, 0, 0);
+  }
+  #searchmovie {
+  background-image: url(/images/searchIcon.png);
+  color: rgb(0, 0, 0);
+  background-position: 96% 6px;
+  background-size: 23px;
+  padding: 3% 5% 3% 5%;
+  background-color: var(--search-bg);
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1.1em;
+  background-repeat: no-repeat;
+  width: 100%;
+  transition: width 0.4s ease-in-out;
+}
+
+#searchmovie:hover {
+  width: 100%;
+  padding: 3% 5% 3% 5%;
+}
+#searchmovie:focus {
+  width: 100%;
+  padding: 3% 5% 3% 5%;
+  border: 1px solid #d6d6d6;
+}
+.card > picture > img{
+  height: 250px;
+  width: 300px;
+  object-fit: cover;
+}
+    </style>
   </head>
   <body id="page-top">
     <div id="wrapper">
@@ -120,7 +153,7 @@
           <hr class="sidebar-divider my-0" />
           <ul class="navbar-nav text-light" id="accordionSidebar">
             <li class="nav-item">
-              <a class="nav-link" href="index.html"
+              <a class="nav-link active" href="index.html"
                 ><i class="fas fa-tachometer-alt"></i><span>Ballina</span></a
               >
             </li>
@@ -187,12 +220,12 @@
               >
                 <div class="input-group">
                   <input
+                  id="searchmovie"
                     class="bg-light form-control border-0 small"
                     type="text"
-                    placeholder="Search for ..."
-                  /><button class="btn btn-primary py-0" type="button">
-                    <i class="fas fa-search"></i>
-                  </button>
+                    placeholder="Kerkoni Filmin"
+                  />
+                  <ul id="results"></ul>
                 </div>
               </form>
               <ul class="navbar-nav flex-nowrap ms-auto">
@@ -469,161 +502,229 @@
               </ul>
             </div>
           </nav>
-          <div class="container">
-            <div class="row">
-              <div class="col-md-8">
-                <img
-                  class="img-fluid"
-                  src="<?php echo $result['Poster'] ?>"
-                  alt="Alt Text"
-                />
+          <div class="container-fluid">
+            <div
+              class="d-sm-flex justify-content-between align-items-center mb-4"
+            >
+              <h3 class="text-dark mb-0">Ballina</h3>
+            </div>
+            <div class="card shadow mb-4">
+              <div
+                class="
+                  card-header
+                  d-flex
+                  justify-content-between
+                  align-items-center
+                "
+              >
+                <h6 class="text-primary fw-bold m-0">
+                  Filmat me te shikuar kete jave
+                </h6>
               </div>
-              <div class="col-md-4">
-                <h3 class="my-3"><?php echo $result['Emri'] ?></h3>
-                <p>
-                  <strong>Ngjarja e filmit</strong><br /><?php echo $result['Plot'] ?>
-                </p>
-                <h3 class="my-3" style="font-size: 18.9px">Detaje tjera</h3>
-                <ul class="list-unstyled">
-                  <li class="text-break">
-                    <strong>Studio:</strong> <br /> <?php echo $result['Studio'] ?>
-                  </li>
-                  <li class="text-break"><strong>Aktoret: </strong><br /><?php echo $result['Aktoret'] ?></li>
-                  <li class="text-break"><strong>Regjisori: </strong><br /><?php echo $result['Regjisor'] ?></li>
-                  <li class="text-break"><strong>Fitime ne Box Office: </strong><br /><?php echo $result['BoxOffice'] ?></li>
-                </ul>
+              <div class="card-body" style="object-fit: contain">
+                <div
+                  class="carousel slide"
+                  data-bs-ride="carousel"
+                  id="carousel-1"
+                  style="height: 509.7px"
+                >
+                  <div class="carousel-inner" style="height: 100%">
+                    <!-- <div class="carousel-item active" style="height: 100%">
+                      <img
+                        class="w-100 d-block"
+                        src="assets/img/dogs/image2.jpeg"
+                        alt="Slide Image"
+                        style="height: 100%"
+                      />
+                    </div>
+                    <div class="carousel-item" style="height: 100%">
+                      <img
+                        class="w-100 d-block"
+                        src="assets/img/dogs/image3.jpeg"
+                        alt="Slide Image"
+                        style="height: 100%"
+                      />
+                    </div>
+                    <div class="carousel-item">
+                      <img
+                        class="w-100 d-block"
+                        src="the-hobbit-the-desolation-of-smaug-2013-movie-banner-poster.jpg"
+                        alt="Slide Image"
+                      />
+                    </div> -->
+                  </div>
+                  <div>
+                    <a
+                      class="carousel-control-prev"
+                      href="#carousel-1"
+                      role="button"
+                      data-bs-slide="prev"
+                      ><span class="carousel-control-prev-icon"></span
+                      ><span class="visually-hidden">Previous</span></a
+                    ><a
+                      class="carousel-control-next"
+                      href="#carousel-1"
+                      role="button"
+                      data-bs-slide="next"
+                      ><span class="carousel-control-next-icon"></span
+                      ><span class="visually-hidden">Next</span></a
+                    >
+                  </div>
+                  <ol class="carousel-indicators">
+                    <li
+                      data-bs-target="#carousel-1"
+                      data-bs-slide-to="0"
+                      class="active"
+                    ></li>
+                    <li data-bs-target="#carousel-1" data-bs-slide-to="1"></li>
+                    <li data-bs-target="#carousel-1" data-bs-slide-to="2"></li>
+                  </ol>
+                </div>
               </div>
             </div>
-            <h3 class="my-4">Filma te ngjashem<br /></h3>
-            <div class="row">
-            <?php
-              for ($i=0; $i < count($rand_keys); $i++) { 
-                $link = str_replace(' ','-',$recResults[$rand_keys[$i]]['Emri'].' '.$recResults[$rand_keys[$i]]['Viti']);
-                echo 
-                '
-                  <div class="col-sm-6 col-md-3 mb-4">
-                    <a href="/movie.php?'.$link.'">
-                    <img class="img-fluid" src="'.$recResults[$rand_keys[$i]]['Poster'].'"/>
-                    </a>
-                  </div>
-                ';
-              }
-
-            ?>
-            </div>
-            <div class="row">
-              <div class="col">
-                <div class="card">
-                  <div class="card-header">
-                    <h3
-                      style="
-                        font-size: 22.4px;
-                        margin-bottom: 0px;
-                        height: 25px;
-                      "
+            <div class="card shadow mb-4">
+              <div
+                class="
+                  card-header
+                  d-flex
+                  justify-content-between
+                  align-items-center
+                "
+              >
+                <h6 class="text-primary fw-bold m-0">Katalogu</h6>
+                <div class="dropdown no-arrow">
+                  <button
+                    class="btn btn-link btn-sm dropdown-toggle"
+                    aria-expanded="false"
+                    data-bs-toggle="dropdown"
+                    type="button"
+                  >
+                    <i class="fas fa-ellipsis-v text-gray-400"></i>
+                  </button>
+                  <div
+                    class="
+                      dropdown-menu
+                      shadow
+                      dropdown-menu-end
+                      animated--fade-in
+                    "
+                  >
+                    <p class="text-center dropdown-header">dropdown header:</p>
+                    <a class="dropdown-item" href="#">&nbsp;Action</a
+                    ><a class="dropdown-item" href="#">&nbsp;Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#"
+                      >&nbsp;Something else here</a
                     >
-                      Komente
-                    </h3>
                   </div>
-                  <div class="card-body" style="height: auto">
-                    <ul class="list-group">
-                      <li class="list-group-item" style="margin-bottom: 6px">
-                        <div class="d-flex media">
-                          <div></div>
-                          <div class="media-body">
-                            <div class="d-flex media" style="overflow: visible">
-                              <div>
-                                <img
-                                  class="mr-3"
-                                  style="width: 25px; height: 25px"
-                                  src="assets/img/user-photo4.jpg"
-                                />
-                              </div>
-                              <div style="overflow: visible" class="media-body">
-                                <div class="row">
-                                  <div class="col-md-12">
-                                    <p class="text-break">
-                                      <a href="#">$komentues1:</a>&nbsp;$Komenti
-                                      i komentuesit 1. <br />
-                                      <small class="text-muted"
-                                        >August 6, 2016 @ 10:35am
-                                      </small>
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="list-group-item" style="margin-bottom: 6px">
-                        <div class="d-flex media">
-                          <div></div>
-                          <div class="media-body">
-                            <div class="d-flex media" style="overflow: visible">
-                              <div>
-                                <img
-                                  class="mr-3"
-                                  style="width: 25px; height: 25px"
-                                  src="assets/img/user-photo4.jpg"
-                                />
-                              </div>
-                              <div style="overflow: visible" class="media-body">
-                                <div class="row">
-                                  <div class="col-md-12">
-                                    <p>
-                                      <a href="#">Brennan Prill:</a> This guy
-                                      has been going 100+ MPH on side streets.
-                                      <br />
-                                      <small class="text-muted"
-                                        >August 6, 2016 @ 10:35am
-                                      </small>
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="list-group-item" style="margin-bottom: 6px">
-                        <div class="d-flex media">
-                          <div></div>
-                          <div class="media-body">
-                            <div class="d-flex media" style="overflow: visible">
-                              <div>
-                                <img
-                                  class="mr-3"
-                                  style="width: 25px; height: 25px"
-                                  src="assets/img/user-photo4.jpg"
-                                />
-                              </div>
-                              <div style="overflow: visible" class="media-body">
-                                <div class="row">
-                                  <div class="col-md-12">
-                                    <p>
-                                      <a href="#">Brennan Prill:</a> This guy
-                                      has been going 100+ MPH on side streets.
-                                      <br />
-                                      <small class="text-muted"
-                                        >August 6, 2016 @ 10:35am
-                                      </small>
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                    <button
-                      class="btn btn-light"
-                      style="margin-left: 629px; margin-top: 0px"
-                      type="button"
-                    >
-                      Add Comment
-                    </button>
+                </div>
+              </div>
+              <div class="card-body" style="object-fit: contain">
+                <div>
+                  <ul class="nav nav-pills nav-justified" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <a
+                        class="nav-link active"
+                        role="tab"
+                        data-bs-toggle="pill"
+                        href="#tab-1"
+                        >Action</a
+                      >
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <a
+                        class="nav-link"
+                        role="tab"
+                        data-bs-toggle="pill"
+                        href="#tab-2"
+                        >Comedy</a
+                      >
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <a
+                        class="nav-link"
+                        role="tab"
+                        data-bs-toggle="pill"
+                        href="#tab-3"
+                        >Romance</a
+                      >
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <a
+                        class="nav-link"
+                        role="tab"
+                        data-bs-toggle="pill"
+                        href="#tab-8"
+                        >Thriller</a
+                      >
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <a
+                        class="nav-link"
+                        role="tab"
+                        data-bs-toggle="pill"
+                        href="#tab-7"
+                        >Mystery</a
+                      >
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <a
+                        class="nav-link"
+                        role="tab"
+                        data-bs-toggle="pill"
+                        href="#tab-6"
+                        >Drama</a
+                      >
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <a
+                        class="nav-link"
+                        role="tab"
+                        data-bs-toggle="pill"
+                        href="#tab-5"
+                        >Documentary</a
+                      >
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <a
+                        class="nav-link"
+                        role="tab"
+                        data-bs-toggle="pill"
+                        href="#tab-4"
+                        >Sport</a
+                      >
+                    </li>
+                  </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane active" role="tabpanel" id="tab-1">
+                        <script
+                          async=""
+                          src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"
+                          integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D"
+                          crossorigin="anonymous"
+                        ></script>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="tab-2">
+                      <p>Content for tab 2.</p>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="tab-3">
+                      <p>Content for tab 3.</p>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="tab-8">
+                      <p>Tab content.</p>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="tab-7">
+                      <p>Tab content.</p>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="tab-6">
+                      <p>Tab content.</p>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="tab-5">
+                      <p>Tab content.</p>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="tab-4">
+                      <p>Tab content.</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -642,10 +743,61 @@
         ><i class="fas fa-angle-up"></i
       ></a>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/script.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/js/script.min.js"></script>
+    <script src="./assets/js/setmovieid.js"></script>
     <script>
-      document.getElementById('sidebarToggle').click();
+    $(document).ready(function(){
+      var kategoria = "Action";
+      $.ajax({
+        type:"GET",
+        url: './php/catalog.php',
+        data: 'txt='+kategoria,
+        success: function(data){
+          $('#tab-1').append(data);
+        }
+      })
+    })
+    $(".nav-link").click(function () {
+        $(".nav-link").removeClass("active");
+        $(this).addClass("active");
+        var id = $(this).prop('href');
+        var kategoria = $(this).text();
+        var t = id.split("#");
+        $(".tab-pane").removeClass("active");
+        $('#'+ t[1]).addClass("active");
+        $(".tab-pane").empty();
+        $.ajax({
+          type: "GET",
+          url: './php/catalog.php',
+          data: 'txt=' + kategoria,
+          success: function(data){
+            $('#'+ t[1]).append(data);
+          }
+        })
+    });
+    $('#searchmovie').keyup(function(){
+            var text = $(this).val();
+            $('#results').html(" ");
+            if( text != ""){
+            $.ajax({
+                type: "GET",
+                url: './php/search.php',
+                data: 'txt=' + text,
+                success: function(data){
+                    $('#results').append(data);
+                }
+            })
+            }});
+      $('document').ready(function(){
+        $.ajax({
+                type: "GET",
+                url: './php/slideshow.php',
+                success: function(data){
+                    $('.carousel-inner').append(data);
+                }
+            })
+            });
     </script>
   </body>
 </html>
