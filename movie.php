@@ -16,7 +16,7 @@
     }
     $movieYear = end($movie);
     $movieName = trim($movieName);
-    $sql = 'SELECT `Poster`, `Viti`, `Emri`, `Gjatesia`, `Zhanri`, `Regjisor`, `Aktoret`, `Plot`, `ImdbId`, `ImdbRating`, `Studio`, `BoxOffice` from Movies where Emri=? and Viti=?';
+    $sql = 'SELECT `MovieId`, `Poster`, `Viti`, `Emri`, `Gjatesia`, `Zhanri`, `Regjisor`, `Aktoret`, `Plot`, `ImdbId`, `ImdbRating`, `Studio`, `BoxOffice` from Movies where Emri=? and Viti=?';
     $getmovie = $con->prepare($sql);
     $getmovie->execute([$movieName, $movieYear]);
     $result = $getmovie->fetch(PDO::FETCH_ASSOC);
@@ -27,8 +27,8 @@
       $recmovies = $con->prepare($sqlalgo);
       $movie = str_replace(' ', '',$result['Zhanri']);
       $movie = explode(',',$movie);
-      // $randCat = $movie[array_rand($movie)];
-      $randCat = 'Action';
+      $randCat = $movie[array_rand($movie)];
+      // $randCat = 'Action';
       $recmovies->bindParam(':zhanri', $randCat);
       $recmovies->execute();
       $recResults = $recmovies->fetchAll(PDO::FETCH_ASSOC);
@@ -207,11 +207,13 @@
                     <img class="img-fluid" src="'.$recResults[$rand_keys[$i]]['Poster'].'"/>
                     </a>
                   </div>
-                ';
-              }
+                ';}
 
             ?>
             </div>
+
+              
+              
             <div class="row">
               <div class="col">
                 <div class="card">
@@ -228,95 +230,6 @@
                   </div>
                   <div class="card-body" style="height: auto">
                     <ul class="list-group" id="addcomments">
-                      <li class="list-group-item" style="margin-bottom: 6px">
-                        <div class="d-flex media">
-                          <div></div>
-                          <div class="media-body">
-                            <div class="d-flex media" style="overflow: visible">
-                              <div>
-                                <img
-                                  class="mr-3"
-                                  style="width: 25px; height: 25px"
-                                  src="assets/img/user-photo4.jpg"
-                                />
-                              </div>
-                              <div style="overflow: visible" class="media-body">
-                                <div class="row">
-                                  <div class="col-md-12">
-                                    <p class="text-break">
-                                      <a href="#">$komentues1:</a>&nbsp;$Komenti
-                                      i komentuesit 1. <br />
-                                      <small class="text-muted"
-                                        >August 6, 2016 @ 10:35am
-                                      </small>
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="list-group-item" style="margin-bottom: 6px">
-                        <div class="d-flex media">
-                          <div></div>
-                          <div class="media-body">
-                            <div class="d-flex media" style="overflow: visible">
-                              <div>
-                                <img
-                                  class="mr-3"
-                                  style="width: 25px; height: 25px"
-                                  src="assets/img/user-photo4.jpg"
-                                />
-                              </div>
-                              <div style="overflow: visible" class="media-body">
-                                <div class="row">
-                                  <div class="col-md-12">
-                                    <p>
-                                      <a href="#">Brennan Prill:</a> This guy
-                                      has been going 100+ MPH on side streets.
-                                      <br />
-                                      <small class="text-muted"
-                                        >August 6, 2016 @ 10:35am
-                                      </small>
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="list-group-item" style="margin-bottom: 6px">
-                        <div class="d-flex media">
-                          <div></div>
-                          <div class="media-body">
-                            <div class="d-flex media" style="overflow: visible">
-                              <div>
-                                <img
-                                  class="mr-3"
-                                  style="width: 25px; height: 25px"
-                                  src="assets/img/user-photo4.jpg"
-                                />
-                              </div>
-                              <div style="overflow: visible" class="media-body">
-                                <div class="row">
-                                  <div class="col-md-12">
-                                    <p>
-                                      <a href="#">Brennan Prill:</a> This guy
-                                      has been going 100+ MPH on side streets.
-                                      <br />
-                                      <small class="text-muted"
-                                        >August 6, 2016 @ 10:35am
-                                      </small>
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
                      <?php
                       if(!(isset($_SERVER['QUERY_STRING']))){
                       header("location: ./intro.php");
@@ -332,22 +245,37 @@
                     }
                     $movieYear = end($movie);
                     $movieName = trim($movieName);
-                    $sql = 'SELECT c.CommentText,c.CommentTime,u.Username,u.UserAvatar from Movies m,Comment c,Users u where c.MovieId=m.MovieId and m.Emri=? and m.Viti=? and c.UserId=u.UserId';
+                    $sql = 'SELECT c.CommentText,c.CommentTime,u.FirstLastName,u.UserAvatar from Movies m,Comment c,Users u where c.MovieId=m.MovieId and m.Emri=? and m.Viti=? and c.UserId=u.UserId';
                     $get_query = $con->prepare($sql);
                     $get_query->execute([$movieName, $movieYear]);}
                     while($movie = $get_query ->fetch(PDO::FETCH_ASSOC)){
-                      echo '<li class="list-group-item" style="margin-bottom:6px">
-                            <div class="d-flex-media"><div></div>
-                            <div class="media-body">
-                            <div class="d-flex media" style="overflow:visible">
-                            <div>
-                            <img class="mr-3" style="width:25px;height:25px" src="'.$movie["UserAvatar"].
-                            '"></div><div style="overflow:visible" class="media-body">
-                            <div class="row"><div class="col-md-12"><p class="text-break"><a href="#">
-                            '.$movie["Username"].':&nbsp;</a> '.$movie["CommentText"].'
-                            <br/><small class="text-muted">'.$movie["CommentTime"].'
-                            </small></div></p></div></div></div> </div></div>
-                      </li>';
+                      echo 
+                      '<li class="list-group-item" style="margin-bottom: 6px">
+                        <div class="d-flex media">
+                          <div></div>
+                          <div class="media-body">
+                            <div class="d-flex media" style="overflow: visible">
+                              <div>
+                                <img class="border rounded-circle img-profile" style="width: 50px; height: 50px;" src="'.$movie["UserAvatar"].'">
+                              </div>
+                              <div style="overflow: visible" class="media-body">
+                                <div class="row">
+                                  <div class="col-md-12" style="    margin-left: 12px;
+    margin-top: 0px; ">
+                                    <p class="text-break">
+                                      <strong><h6>'.$movie["FirstLastName"].'</h6></strong>'.$movie["CommentText"].'<br>
+                                      <small class="text-muted">'.date("F d, Y h:i:s A", $timestamp = strtotime($movie["CommentTime"])).'
+                                      </small>
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+    ';
+
                     }
                     ?> 
                     </ul>
@@ -417,17 +345,30 @@
             })
             }});
             $('#commentbutton').click(function(){
-              var text = $(this).val();
-              if(text !=""){
+              if('<?php echo $_SESSION["loggedIn"]; ?>' != true){
+                window.location.href = "./login.php";
+              }else{
+                var text = $('#commenttext').val();
+                var userID = `<?php echo $_SESSION["userID"]; ?>`
+                var movieID = `<?php echo $result['MovieId']; ?>`
+                if(text !=""){
                 $.ajax({
-                  type: "GET",
-                  url: './php/comment.php',
-                  data: 'txt=' + text,
-                  success: function(data){
-                    $('#addcomment').append(data);
-                  }
-                })
+			          	url: "./php/addComment.php",
+			          	type: "POST",
+			          	data: {
+                    text: text,
+                    userID: userID,
+                    movieID: movieID 
+			          	},
+			          	cache: false,
+			          	success: function(dataResult){
+			          		$('#addcomments').append(dataResult);
+			          	}
+
+			          });
               }
+              }
+              
             })
     </script>
 

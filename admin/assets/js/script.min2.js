@@ -46,7 +46,7 @@ function onFileSelected(e) {
     o = new FileReader();
   (o.onload = function (e) {
     poster.src = e.target.result;
-    // console.log(poster.src);
+    //console.log(poster.src);
     // document.getElementById('posterfield').value = poster.src;
   }),
     o.readAsDataURL(t);

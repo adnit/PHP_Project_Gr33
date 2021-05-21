@@ -95,7 +95,7 @@ echo
     <body>
     <img style="width:100%; height:200px; object-fit:contain" src = "https://kinofiek.online/images/KinoFiekMetaData.png"> <hr>
     <p style="font-size:18px; color:black">'.$msg.'</p><hr>
-    <a href="editsalla.php" style="font-size:25px">Kliko këtu për të u kthyer në faqen kryesore të sallave</a>
+    <a href="editsalla.html" style="font-size:25px">Kliko këtu për të u kthyer në faqen kryesore të sallave</a>
     <body>
     <html>
     ';

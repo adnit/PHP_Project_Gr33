@@ -108,7 +108,6 @@
     background: gray;
   }
   #searchmovie {
-  background-image: url(/images/searchIcon.png);
   color: rgb(0, 0, 0);
   background-position: 96% 6px;
   background-size: 23px;
@@ -142,7 +141,6 @@
   <body id="page-top">
     <div id="wrapper">
       <?php include("./views/navbar.php") ?>
-      
           <div class="container-fluid">
             <div
               class="d-sm-flex justify-content-between align-items-center mb-4"
@@ -363,7 +361,6 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/js/script.min.js"></script>
-    <script src="./assets/js/setmovieid.js"></script>
     <script>
     $(document).ready(function(){
       var kategoria = "Action";
@@ -394,16 +391,16 @@
           }
         })
     });
-    $('#searchmovie').keyup(function(){
+    $('#searchmovie').keydown(function(){
+            $('#results').html("");
             var text = $(this).val();
-            $('#results').html(" ");
-            if( text != ""){
+            if( !(text == "" || text == " ")){
             $.ajax({
                 type: "GET",
                 url: './php/search.php',
                 data: 'txt=' + text,
                 success: function(data){
-                    $('#results').append(data);
+                    $('#results').html(data);
                 }
             })
             }});

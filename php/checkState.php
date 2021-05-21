@@ -3,7 +3,7 @@ function redirect($type){
   if ($type == "User") {
     header('location: ../index.php');
   } else if ($type == "ADMIN") {
-    header('location: ../admin.php');
+    header('location: ../admin/index.php');
   }
 }
 if (isset($_SESSION["loggedIn"])) {

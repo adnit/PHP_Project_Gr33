@@ -16,6 +16,11 @@ include "php/eventsQuerys.php";
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" />
         <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css" />
         <link rel="stylesheet" href="assets/css/styles.min.css" />
+           <style>
+        .input-group{
+            display: none;
+        }
+        </style>
     </head>
     <body id="page-top">
         <div id="wrapper">

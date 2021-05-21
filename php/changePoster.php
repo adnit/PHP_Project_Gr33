@@ -20,7 +20,7 @@
           $handle->image_convert         = 'png';
           $handle->image_resize          = true;
           $handle->image_ratio_crop      = true;
-          $handle->image_y               = 444;
+          $handle->image_y               = 445;
           $handle->image_x               = 300;
           header('Content-type: ' . $handle->file_src_mime);
           $handle->process('../assets/img/posters');

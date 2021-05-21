@@ -8,11 +8,11 @@
 	$userID=$_POST['userID'];
   $sql = "UPDATE users SET Username=?, FirstLastName=?, Email=? WHERE userID=?";
   $update = $con->prepare($sql);
-  
+
 	if ($update->execute([$username, $firstlast, $email, $userID])){
-    $_SESSION['username'] = $username;
-    $_SESSION['firstlast'] = $firstlast;
-    $_SESSION['email'] = $email;
+	  $_SESSION['username'] = $username;
+	  $_SESSION['firstlast'] = $firstlast;
+	  $_SESSION['email'] = $email;
 		echo json_encode(array("statusCode"=>200));
 	} 
 	else {

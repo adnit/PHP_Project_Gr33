@@ -1,6 +1,11 @@
 <?php
+include('./php/session.php');
 include('./php/checkState.php');
 require_once('./php/connect.php');
+
+if(isset($_SESSION["user_type"])){
+  redirect($_SESSION["user_type"]);
+}
 
 if(isset($_POST['username'])) {
 $username = $_POST["username"];
@@ -20,7 +25,10 @@ $password = $_POST["password"];
      $hashed = strval($data['PASSWORD']);
 		  if (password_verify($password, $hashed)) {
         if($data["Activeac"]){
+          $_SESSION["firstlast"] = $data['FirstLastName'];
+          $_SESSION["avatar"] = $data['UserAvatar'];
           $_SESSION["username"] = $username;
+          $_SESSION["userID"] = $data['UserId'];
 				  $_SESSION["email"] = $data['email'];
 				  $_SESSION["loggedIn"] = true;
 				  $_SESSION["user_type"] = $data['UserType'];

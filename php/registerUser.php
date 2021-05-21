@@ -2,6 +2,7 @@
   namespace Verot\Upload;
   include('./php/checkState.php');
   require_once 'connect.php';
+  require_once './session.php';
   require_once './class.upload.php';
   
 
@@ -107,8 +108,8 @@
           $handle->file_new_name_body    = $newFileName;  
           $handle->image_resize          = true;
           $handle->image_ratio_crop      = true;
-          $handle->image_y               = 100;
-          $handle->image_x               = 100;
+          $handle->image_y               = 160;
+          $handle->image_x               = 160;
           header('Content-type: ' . $handle->file_src_mime);
           $handle->process('../assets/img/avatars');
           if ($handle->processed) {
@@ -162,7 +163,6 @@
       $sqlInsert->bindParam(':firstlastname', $firstLastName);
       $sqlInsert->bindParam(':avatar', $avatar);
 
-      $sqlInsert->execute();
 
     if($sqlInsert->execute()){
       require "sendmail.php";

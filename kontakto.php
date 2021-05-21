@@ -1,6 +1,5 @@
 <?php
-
-include 'connect.php';
+include './php/connect.php';
 ?>
 <!DOCTYPE html>
 <html>

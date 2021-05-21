@@ -45,25 +45,30 @@
               <div class="col-lg-4">
                 <div class="card-body text-center shadow">
                     <img
+                      id ="avatarImg"
                       class="rounded-circle mb-3 mt-4"
                       src="<?php echo $_SESSION["avatar"];?>"
                       width="160"
                       height="160"
+                      style="object-fit: cover;"
                     />
                     <form>
                       <input
+                        id="avatarPic"
+                        name="avatarPic"
                         class="form-control"
                         type="file"
+                        onchange="onFileSelected(event)"
                         style="width: 50%; margin: auto; margin-bottom: 9px"
                         accept="image/*"
                       />
-                      <div class="mb-3">
-                      <button class="btn btn-primary btn-sm" type="button">
+                      
+                    </form>
+                    <div class="mb-3">
+                      <button disabled id="changeAvatar" class="btn btn-primary btn-sm" type="button">
                         Change Photo
                       </button>
                     </div>
-                    </form>
-                    
                   </div>
               </div>
               <div class="col-lg-8">
@@ -125,7 +130,7 @@
                               justify-content-xl-end
                             "
                             style="text-align: right"
-                          > <a id="editInfo" onclick="" style="text-decoration: inherit; color: inherit;" href='#'>
+                          > <a id="editInfo" onclick="" style="text-decoration: inherit; color: inherit;" href='#'> Ndrysho fjalekalimin
                             <i 
                             id="sideIcon"
                               class="
@@ -203,7 +208,41 @@
                               </div>
                             </div>
                           </div>
-                          <div class="mb-3">
+                           <div id="changePw" class="row d-none">
+                            <div class="col">
+                              <div class="mb-3">
+                                <label class="form-label" for="Fjalekalimi i ri"
+                                  ><strong>Fjalekalimi i vjeter</strong></label
+                                ><input
+                                  class="form-control"
+                                  type="password"
+                                  id="oldpassword"
+                                  placeholder="Fjalekalimi"
+                                
+                                  name="oldpassword"
+                                  disabled
+                                />
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="mb-3">
+                                <label class="form-label" for=""
+                                  ><strong>Fjalekalimi i ri</strong></label
+                                ><input
+                                  class="form-control"
+                                  type="password"
+                                  id="newpassword"
+                                  placeholder="Fjalekalimi i ri"
+                                  
+                                  name="newpassword"
+                                  disabled
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          
+                        </form>
+                        <div class="mb-3">
                             <button
                               id="saveBtn"
                               class="btn btn-primary btn-sm d-none"
@@ -216,7 +255,6 @@
                               ><i class="fas fa-check text-white"></i
                             ></a>
                           </div>
-                        </form>
                       </div>
                     </div>
                   </div>
@@ -245,10 +283,13 @@
     let editBtn = document.getElementById('editInfo')
     let sideIcon = document.getElementById('sideIcon')
     let saveBtn = document.getElementById('saveBtn')
-    let usernameFld = document.getElementById('username')
-    let firstNameFld = document.getElementById('first_name')
-    let emailFld = document.getElementById('email-1')
-    let fields = [usernameFld, firstNameFld, emailFld]
+    // let usernameFld = document.getElementById('username')
+    // let firstNameFld = document.getElementById('first_name')
+    // let emailFld = document.getElementById('email-1')
+    let oldpw = document.getElementById('oldpassword')
+    let newpw = document.getElementById('newpassword')
+    let changepw = document.getElementById('changePw')
+    let fields = [oldpw, newpw]
     editBtn.addEventListener('click', () => {
       if (fields[0].disabled) {
         fields.forEach(element => {
@@ -258,30 +299,23 @@
         fields.forEach(element => {
         element.disabled = true;
       });
-      usernameFld.value = "<?php echo $_SESSION['username'] ?>"
-      firstNameFld.value = "<?php echo $_SESSION['firstlast'] ?>"
-      emailFld.value = "<?php echo $_SESSION['email'] ?>"
       }
       saveBtn.classList.toggle("d-none");
+      changepw.classList.toggle("d-none");
       sideIcon.classList.toggle("fas")
       sideIcon.classList.toggle("fa-window-close")
     })
-
-
-$('#saveBtn').on('click', function() {
-		var username = $('#username').val();
-		var firstlast = $('#first_name').val();
-		var email = $('#email-1').val();
-    let userID = parseInt("<?php echo $_SESSION['userID']; ?>",10);
-		if(username!="" && firstlast!="" && email!=""){
-			$.ajax({
-				url: "/php/saveData.php",
+    $('#saveBtn').on('click', function() {
+    let oldPassword = oldpw.value;
+    let newPassword = newpw.value;
+    let userID = parseInt("<?php echo $_SESSION['userID']; ?>",10);                          
+      $.ajax({
+				url: "./php/changeInfo.php",
 				type: "POST",
 				data: {
-          userID: userID,
-					username: username,
-					firstlast: firstlast,
-					email: email
+          newPassword: newPassword,
+					oldPassword: oldPassword,
+					userId: userID,
 				},
 				cache: false,
 				success: function(dataResult){
@@ -291,19 +325,52 @@ $('#saveBtn').on('click', function() {
               element.disabled = true;
             });
             $("#success").show();
-            location.reload();
+            window.location.replace("./login.php")
 					}
-					else if(dataResult.statusCode==201){
-					   alert("Error occured !");
+					else if(dataResult.statusCode==403){
+					  alert("Fjalekalimi i gabuar!");
 					}
 					
 				}
 			});
-		}
-		else{
-			alert('Please fill all the field !');
-		}
-	});
+    
+    
+});
+
+    $('#changeAvatar').on('click', function() {
+    var file_data = $('#avatarPic').prop('files')[0];   
+    var form_data = new FormData();
+    let userID = parseInt("<?php echo $_SESSION['userID']; ?>",10);
+    form_data.append('file', file_data);
+    form_data.append('UserId', userID);                            
+    $.ajax({
+        url: '../php/changeAvatar.php', // <-- point to server-side PHP script 
+        dataType: 'text',  // <-- what to expect back from the PHP script, if anything
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,                         
+        type: 'post',
+        success: function(php_script_response){
+            // alert(php_script_response); // <-- display response from the PHP script, if any
+        }
+     });
+});
+
+function onFileSelected(event) {
+  document.getElementById("changeAvatar").disabled = false;
+  var selectedFile = event.target.files[0];
+  var reader = new FileReader();
+
+  var imgtag = document.getElementById("avatarImg");
+  imgtag.title = selectedFile.name;
+
+  reader.onload = function(event) {
+    imgtag.src = event.target.result;
+  };
+
+  reader.readAsDataURL(selectedFile);
+}
     </script>
 
   

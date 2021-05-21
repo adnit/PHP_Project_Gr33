@@ -3,7 +3,7 @@ $email = $_GET["email"];
 $hash = $_GET["hash"];
 
 if($email == null || $hash== null){
-  header('location: ../index.html');
+  header('location: ./index.php');
 }
 ?>
 <!DOCTYPE html>
@@ -84,7 +84,7 @@ $stmt = $con->prepare("SELECT * FROM users WHERE email=? and hash=? and
                       </p>
                       ';
                       } ?>
-                      <a href="#" style="margin-bottom: 10px;" class="btn btn-success btn-icon-split" role="button"><span class="text-white-50 icon"><i class="fas fa-home"></i></span><span class="text-white text">Ballina</span></a>
+                      <a href="./index.php" style="margin-bottom: 10px;" class="btn btn-success btn-icon-split" role="button"><span class="text-white-50 icon"><i class="fas fa-home"></i></span><span class="text-white text">Ballina</span></a>
                     </div>
                     
                     <div id="todo">
