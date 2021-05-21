@@ -37,6 +37,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="assets/css/styles.min.css" />
     <style>
+      .input-group{
+        width: 15.5rem;
+      }
+      .carousel-item img{
+        object-fit: contain;
+      }
+      a{
+        text-decoration: none;
+      }
     .input-group li a:hover {
   cursor: pointer;
 }
@@ -54,7 +63,7 @@
 
   backdrop-filter: blur(150px);
 
-  width: 250px;
+  width: 15.5rem;
   position: absolute;
   list-style-type: none;
   margin-top: 45px;
@@ -74,7 +83,7 @@
   width: 100px;
   object-fit: cover;
   border-radius: 3px;
-  margin-left: -0.7rem;
+  margin-left: -2rem;
   }
 
 .mvtitle {
@@ -82,7 +91,7 @@
   vertical-align: middle;
   margin: 8% 0;
   font-size: 0.7rem;
-  margin-left: 0.7rem;
+  margin-left: 1.5rem;
   }
 
 #results a {
@@ -94,6 +103,9 @@
   }
 #results a:visited {
   color: rgb(0, 0, 0);
+  }
+  .carousel-control-prev, .carousel-control-next{
+    background: gray;
   }
   #searchmovie {
   background-image: url(/images/searchIcon.png);
@@ -158,29 +170,6 @@
                   style="height: 509.7px"
                 >
                   <div class="carousel-inner" style="height: 100%">
-                    <!-- <div class="carousel-item active" style="height: 100%">
-                      <img
-                        class="w-100 d-block"
-                        src="assets/img/dogs/image2.jpeg"
-                        alt="Slide Image"
-                        style="height: 100%"
-                      />
-                    </div>
-                    <div class="carousel-item" style="height: 100%">
-                      <img
-                        class="w-100 d-block"
-                        src="assets/img/dogs/image3.jpeg"
-                        alt="Slide Image"
-                        style="height: 100%"
-                      />
-                    </div>
-                    <div class="carousel-item">
-                      <img
-                        class="w-100 d-block"
-                        src="the-hobbit-the-desolation-of-smaug-2013-movie-banner-poster.jpg"
-                        alt="Slide Image"
-                      />
-                    </div> -->
                   </div>
                   <div>
                     <a

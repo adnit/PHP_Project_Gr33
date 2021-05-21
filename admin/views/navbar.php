@@ -1,35 +1,6 @@
-
 <?php
-require_once('connect.php');
-?>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-    />
-    <title>Table - Movies</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-    />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  </head>
-  <body id="page-top">
-    <div id="wrapper">
-      <nav
+require_once('./php/session.php'); 
+echo '<nav
         class="
           navbar navbar-dark
           align-items-start
@@ -51,35 +22,46 @@ require_once('connect.php');
             "
             href="#"
             ><div class="sidebar-brand-icon rotate-n-15">
-              <i class="fas fa-laugh-wink"></i>
+              <i class="material-icons">local_movies</i>
             </div>
-            <div class="sidebar-brand-text mx-3"><span>Brand</span></div></a
+            <div class="sidebar-brand-text mx-3"><span>kinofiek</span></div></a
           >
           <hr class="sidebar-divider my-0" />
           <ul class="navbar-nav text-light" id="accordionSidebar">
             <li class="nav-item">
-              <a class="nav-link" href="index.html"
-                ><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a
+              <a id="ballina" class="nav-link" href="../../index.php"
+                ><i class="fas fa-tachometer-alt"></i><span>Ballina</span></a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="profile.html"
-                ><i class="fas fa-user"></i><span>Profile</span></a
+              <a id="profile"  class="nav-link" href="../profile.php"
+                ><i class="fas fa-user"></i><span>Profili</span></a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="table.html"
+              <a id="table" class="nav-link" href="../table.php"
+                ><i class="fas fa-table"></i><span>Movie Table</span></a
+              >
+            </li>
+            <li class="nav-item">
+              <a id="table" class="nav-link" href="../editeventet.php"
                 ><i class="fas fa-table"></i><span>Table</span></a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../login.php"
+              <a id="table" class="nav-link" href="../editsalla.html"
+                ><i class="fas fa-table"></i><span>Sallat</span></a
+              >
+            </li>
+            <li class="nav-item">
+              <a id="login" class="nav-link" href="../login.php"
                 ><i class="far fa-user-circle"></i><span>Login</span></a
               >
             </li>
             <li class="nav-item">
               <a class="nav-link" href="../register.php"
-                ><i class="fas fa-user-circle"></i><span>Register</span></a
+                ><i class="fas fa-user-circle"></i
+                ><span>Rreth kinemase tone</span></a
               >
             </li>
           </ul>
@@ -92,6 +74,7 @@ require_once('connect.php');
           </div>
         </div>
       </nav>
+      
       <div class="d-flex flex-column" id="content-wrapper">
         <div id="content">
           <nav
@@ -128,7 +111,9 @@ require_once('connect.php');
                     class="bg-light form-control border-0 small"
                     type="text"
                     placeholder="Kerkoni Filmin"
+                    autocomplete="off"
                   />
+                  <ul id="results"></ul>
                 </div>
               </form>
               <ul class="navbar-nav flex-nowrap ms-auto">
@@ -148,6 +133,20 @@ require_once('connect.php');
                     "
                     aria-labelledby="searchDropdown"
                   >
+                    <form class="me-auto navbar-search w-100">
+                      <div class="input-group">
+                        <input
+                          class="bg-light form-control border-0 small"
+                          type="text"
+                          placeholder="Kerko filim..."
+                        />
+                        <div class="input-group-append">
+                          <button class="btn btn-primary py-0" type="button">
+                            <i class="fas fa-search"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                 </li>
                 <li class="nav-item dropdown no-arrow mx-1">
@@ -210,7 +209,7 @@ require_once('connect.php');
                             >December 2, 2019</span
                           >
                           <p>
-                            Spending Alert: We've noticed unusually high
+                            Spending Alert: We\'ve noticed unusually high
                             spending for your account.
                           </p>
                         </div></a
@@ -253,7 +252,7 @@ require_once('connect.php');
                           <div class="text-truncate">
                             <span
                               >Hi there! I am wondering if you can help me with
-                              a problem I've been having.</span
+                              a problem I\'ve been having.</span
                             >
                           </div>
                           <p class="small text-gray-500 mb-0">
@@ -292,7 +291,7 @@ require_once('connect.php');
                         <div class="fw-bold">
                           <div class="text-truncate">
                             <span
-                              >Last month's report looks great, I am very happy
+                              >Last month\'s report looks great, I am very happy
                               with the progress so far, keep up the good
                               work!</span
                             >
@@ -316,7 +315,7 @@ require_once('connect.php');
                             <span
                               >Am I a good boy? The reason I ask is because
                               someone told me that people say this to all dogs,
-                              even if they aren't good...</span
+                              even if they aren\'t good...</span
                             >
                           </div>
                           <p class="small text-gray-500 mb-0">
@@ -343,12 +342,29 @@ require_once('connect.php');
                       aria-expanded="false"
                       data-bs-toggle="dropdown"
                       href="#"
-                      ><span class="d-none d-lg-inline me-2 text-gray-600 small"
-                        >Valerie Luna</span
+                      >
+                      ';
+                    if (isset($_SESSION["firstlast"])) {
+                      echo 
+                      '
+                        <span class="d-none d-lg-inline me-2 text-gray-600 small"
+                        >'.$_SESSION["firstlast"].'</span
                       ><img
                         class="border rounded-circle img-profile"
-                        src="assets/img/avatars/avatar1.jpeg"
-                    /></a>
+                        src="'.$_SESSION["avatar"].'"
+                    />
+                      ';
+                    }else {
+                      echo '<span class="d-none d-lg-inline me-2 text-gray-600 small"
+                        >Ju nuk jeni kyqur</span
+                      ><img
+                        class="border rounded-circle img-profile"
+                        src="assets/img/avatars/avatar-default.png"
+                    />';
+                    }
+
+                    echo '
+                    </a>
                     <div
                       class="
                         dropdown-menu
@@ -356,25 +372,36 @@ require_once('connect.php');
                         dropdown-menu-end
                         animated--grow-in
                       "
-                    >
-                      <a class="dropdown-item" href="#"
+                    >';
+
+                    if (isset($_SESSION["firstlast"])) {
+                      echo '
+                      <a class="dropdown-item" href="/profile.php"
                         ><i
                           class="fas fa-user fa-sm fa-fw me-2 text-gray-400"
                         ></i
                         >&nbsp;Profile</a
-                      ><a class="dropdown-item" href="#"
+                      >';
+                      if (isset($_SESSION["user_type"]) && $_SESSION["user_type"] == "ADMIN"){
+                        echo '
+                      <a class="dropdown-item" href="/admin.php"
                         ><i
-                          class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"
+                          class="
+                            fas
+                            fa-cog fa-sm fa-fw
+                            me-2
+                            text-gray-400
+                          "
                         ></i
-                        >&nbsp;Settings</a
-                      ><a class="dropdown-item" href="#"
-                        ><i
-                          class="fas fa-list fa-sm fa-fw me-2 text-gray-400"
-                        ></i
-                        >&nbsp;Activity log</a
+                        >&nbsp;Admin Panel</a
                       >
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#"
+                    ';
+                      }
+
+                        echo 
+                        '
+                        <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="/logout.php"
                         ><i
                           class="
                             fas
@@ -385,105 +412,32 @@ require_once('connect.php');
                         ></i
                         >&nbsp;Logout</a
                       >
-                    </div>
+                    ';
+                    
+
+                      }else {
+                      echo '
+                      <a class="dropdown-item" href="/login.php"
+                        ><i
+                          class="fas fa-key fa-sm fa-fw me-2 text-gray-400"
+                        ></i
+                        >&nbsp;Kyqu</a
+                      ><a class="dropdown-item" href="/register.php"
+                        ><i
+                          class="fas fa-clipboard-check fa-sm fa-fw me-2 text-gray-400"
+                        ></i
+                        >&nbsp;Regjistrohu</a
+                      >
+                    ';
+                    }
+
+                  echo '
                   </div>
                 </li>
               </ul>
             </div>
           </nav>
-          <div class="container-fluid">
-            <h3 class="text-dark mb-4">Movies</h3>
-            <div class="card shadow">
-              <div class="card-header py-3">
-                <p class="text-primary m-0 fw-bold">Movies List</p>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-6 text-nowrap">
-                    <div
-                      id="dataTable_length"
-                      class="dataTables_length"
-                      aria-controls="dataTable"
-                    >
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div
-                      class="text-md-end dataTables_filter"
-                      id="dataTable_filter"
-                    >
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="table-responsive table mt-2"
-                  id="dataTable"
-                  role="grid"
-                  aria-describedby="dataTable_info"
-                >
-                  <table class="table my-0" id="dataTable">
-                    <thead>
-                      <tr>
-                        <th>Movie Name</th>
-                        <th>Studio</th>
-                        <th>Year</th>
-                      </tr>
-                    </thead>
-                    <tbody id="tablebody1">
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <footer class="bg-white sticky-footer">
-          <div class="container my-auto">
-            <div class="text-center my-auto copyright">
-              <span>Copyright © Brand 2021</span>
-            </div>
-          </div>
-        </footer>
-      </div>
-      <a class="border rounded d-inline scroll-to-top" href="#page-top"
-        ><i class="fas fa-angle-up"></i
-      ></a>
-    </div>
-    <script>
-    $('#searchmovie').keyup(function(){
-            var text = $(this).val();
-            $('#tablebody1').html(" ");
-            if( text != ""){
-            $.ajax({
-                type: "GET",
-                url: '../php/getmoviestable.php',
-                data: 'txt=' + text,
-                success: function(data){
-                    $('#tablebody1').append(data);
-                }
-            })
-            }
-          else{
-            $.ajax({
-              type: "GET",
-              url: '../php/getallmoviestable.php',
-              success: function(data){
-                  $('#tablebody1').append(data);
-              }
-            })
-          }});
-          $(document).ready(function(){
-            $.ajax({
-              type: "GET",
-              url: '../php/getallmoviestable.php',
-              success: function(data){
-                  $('#tablebody1').append(data);
-              }
-            })
-          })
-            </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta3/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
-    <script src="assets/js/script.min.js"></script>
-  </body>
-</html>
+      ';
+
+
+?>

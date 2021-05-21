@@ -101,6 +101,7 @@ echo '<nav
                     class="bg-light form-control border-0 small"
                     type="text"
                     placeholder="Kerkoni Filmin"
+                    autocomplete="off"
                   />
                   <ul id="results"></ul>
                 </div>
