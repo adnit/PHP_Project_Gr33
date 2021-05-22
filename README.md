@@ -1,13 +1,12 @@
-# Projekti ne lenden : PHP ( Tranzicion nga lenda Interneti)
-# OLD
-[![Netlify Status](https://api.netlify.com/api/v1/badges/bbb5558a-276d-4b77-ba93-7136ae667166/deploy-status)](https://kinofiek.online/)
+# Projekti ne lenden Programimi ne internet
 
-Kinofiek eshte website i zhvilluar me HTML5, CSS3, JavaScript dhe jQuery ku perdoruesit mund te:
+Kinofiek eshte web app i zhvilluar me PHP ku perdoruesit mund te:
 
-- Shohin se cilet jane filmat me te shikuar te javes,
+- Shohin se cilet jane filmat me te shikuar te koheve te fundit,
 - Katalogun e kinemase,
 - Shohin evente te kinemase,
-- Rezervojne bileta.
+- Komentojne rreth filmave
+- Shikojne detaje tjera rreth filmave
 
 Ky website eshte zhvilluar nga studentet e vitit te dyte FIEK, drejtimi Inxhinieri Kompjuterike
 
@@ -18,16 +17,22 @@ Ky website eshte zhvilluar nga studentet e vitit te dyte FIEK, drejtimi Inxhinie
 
 ## Qasja ne website
 
-Website eshte i hostuar [ketu](https://kinofiek.netlify.app/).
+Website eshte i hostuar [ketu](https://kinofiek.000webhostapp.com/).!! Procesi i hostimit ska perfunduar ende
+
+## Things to note
+Disa pjese te ketij web applikacioni kane nevoje per konfigurim
+- PHP Mailer
+- API Keys
+- Lidhja me databaze dhe konfigurimi i tabelave
 
 ## Burimet e perdorura
 
 Per zhvillimin e keti website krahas materialit qe eshte ofruar ne ligjerata dhe ushtrime jane perdorur edhe materiale nga keto platforma
 
+- [PHP Documentation](https://devdocs.io/php/),
 - [Mozilla MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web),
-- [W3Schools](https://www.w3schools.com/),
-- [Codepen](https://codepen.io).
-
+- [Verot Class Upload - Uploadimi dhe manipulimi me foto](https://github.com/verot/class.upload.php),  
+- [PDO - Qasja me DB](https://phpdelusions.net/pdo#why).
 Images, audios, videos hosted on the website are used under Fair Use Act, but if you think your rights are infringed and you want the content taken down, contact [here](mailto:adnitkamberi.rks@gmail.com)
 
 ## License
