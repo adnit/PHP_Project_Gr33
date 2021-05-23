@@ -3,13 +3,13 @@
   require_once('./php/connect.php');
 
   if(!(isset($_SERVER['QUERY_STRING']))){
-    header("location: ./intro.php");
+    header("location: ./404.php");
   }else{
     $movie = $_SERVER['QUERY_STRING'];
     $movie = explode('-',$movie);
     $movieName = "";
     if(sizeof($movie) < 1){
-      header("location: ./login.php");
+      header("location: ./404.php");
     }
     for ($i=0; $i < count($movie) - 1; $i++) { 
       $movieName.= $movie[$i].' ';
@@ -21,7 +21,7 @@
     $getmovie->execute([$movieName, $movieYear]);
     $result = $getmovie->fetch(PDO::FETCH_ASSOC);
     if(!$result){
-      header("location: /login.php");
+      header("location: ./404.php");
     }else{
       $sqlalgo = "SELECT `Poster`, `Emri`, `Viti` FROM `movies` WHERE `Zhanri` LIKE CONCAT('%', :zhanri, '%')";
       $recmovies = $con->prepare($sqlalgo);
@@ -318,7 +318,7 @@
         <footer class="bg-white sticky-footer">
           <div class="container my-auto">
             <div class="text-center my-auto copyright">
-              <span>Copyright © Brand 2021</span>
+              <span>Copyright - KinoFiek 2021</span>
             </div>
           </div>
         </footer>

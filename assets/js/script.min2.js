@@ -12,7 +12,7 @@ document.addEventListener(
   !1
 );
 document.getElementById('getinfo').classList.add('d-none');
-const ombdAPI_KEY = 'af2beff5';
+const ombdAPI_KEY = '--';
 var doge =
   'https://imgix.gizmodo.com.au/content/uploads/sites/2/2021/05/10/237bm4bba4g61.png?ar=16%3A9&auto=format&fit=crop&q=80&w=1280&nrs=30';
 function showForm() {

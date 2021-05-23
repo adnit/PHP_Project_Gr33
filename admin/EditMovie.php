@@ -20,7 +20,6 @@ if(isset($_SESSION["user_type"]) && $_SESSION["user_type"]=="ADMIN"){
     $getmovie = $con->prepare($sql);
     $getmovie->execute([$movie]);
     $result = $getmovie->fetch(PDO::FETCH_ASSOC);
-    var_dump($result);
     if(!$result){
       header("location: /index.php");
     }else{

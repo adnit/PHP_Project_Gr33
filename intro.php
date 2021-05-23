@@ -1,5 +1,5 @@
 <?php
-
+  require_once('./php/session.php');
   require_once('./php/connect.php');
   include('./php/checkState.php');
 

@@ -274,7 +274,7 @@ if(isset($_SESSION["user_type"]) && $_SESSION["user_type"]=="ADMIN"){
       $sqlE = "SELECT COUNT(*) AS totalEvents FROM Evente";
       $sqlM = "SELECT COUNT(*) AS totalMovies FROM Movies";
       $sqlU = "SELECT COUNT(*) AS totalUsers FROM Users";
-      $sqlS = "SELECT COUNT(*) AS totalSalla FROM Sallat";
+      $sqlS = "SELECT COUNT(*) AS totalSalla FROM Salla";
 
       $prepE = $con->prepare($sqlE);
       $prepE->execute();
@@ -420,7 +420,7 @@ if(isset($_SESSION["user_type"]) && $_SESSION["user_type"]=="ADMIN"){
         <footer class="bg-white sticky-footer">
           <div class="container my-auto">
             <div class="text-center my-auto copyright">
-              <span>Copyright © Brand 2021</span>
+              <span>Copyright - KinoFiek 2021</span>
             </div>
           </div>
         </footer>

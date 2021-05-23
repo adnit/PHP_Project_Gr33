@@ -16,7 +16,7 @@ require_once('../php/connect.php');
       name="viewport"
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
-    <title>Table - Movies</title>
+    <title>Users - KinoFiek</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
@@ -250,10 +250,10 @@ require_once('../php/connect.php');
             </div>
           </nav>
           <div class="container-fluid">
-            <h3 class="text-dark mb-4">Movies</h3>
+            <h3 class="text-dark mb-4">Perderuesit</h3>
             <div class="card shadow">
               <div class="card-header py-3">
-                <p class="text-primary m-0 fw-bold">Movies List</p>
+                <p class="text-primary m-0 fw-bold">List e perderuesit</p>
               </div>
               <div class="card-body">
                 <div class="row">
@@ -282,9 +282,9 @@ require_once('../php/connect.php');
                   <table class="table my-0" id="dataTable">
                     <thead>
                       <tr>
-                        <th>Movie Name</th>
-                        <th>Studio</th>
-                        <th>Year</th>
+                        <th>Emri i perderuesit</th>
+                        <th>Email</th>
+                        <th>Tipi</th>
                       </tr>
                     </thead>
                     <tbody id="tablebody1">
@@ -324,7 +324,7 @@ require_once('../php/connect.php');
           else{
             $.ajax({
               type: "GET",
-              url: '../php/getallmoviestable.php',
+              url: '../php/getallusers.php',
               success: function(data){
                   $('#tablebody1').append(data);
               }
@@ -333,7 +333,7 @@ require_once('../php/connect.php');
           $(document).ready(function(){
             $.ajax({
               type: "GET",
-              url: '../php/getallmoviestable.php',
+              url: '../php/getallusers.php',
               success: function(data){
                   $('#tablebody1').append(data);
               }

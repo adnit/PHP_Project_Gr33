@@ -1,3 +1,13 @@
+<?php 
+  require_once('../php/session.php');
+  require_once('../php/connect.php');
+
+  if(isset($_SESSION["user_type"]) && $_SESSION["user_type"]=="ADMIN"){
+
+  }else{
+  header("location: ../index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en" style="width: 100%">
   <head>
@@ -6,7 +16,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
-    <title>Register - KinoFIEK | Admin</title>
+    <title>Shto filmin - KinoFIEK | Admin</title>
     <meta name="description" content="This is the description" />
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
     <link

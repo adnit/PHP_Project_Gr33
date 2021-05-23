@@ -1,8 +1,12 @@
 <?php
   namespace Verot\Upload;
-  require_once('../php/session.php');
+
+use Perkthe;
+
+require_once('../php/session.php');
   require_once('../php/connect.php');
   require_once('../php/class.upload.php');
+  require_once('../php/translate.php');
 
   $emri = $_POST["emri"];
   $runtime = $_POST["runtime"];
@@ -13,6 +17,8 @@
   $director = $_POST["movie_director"];
   $actors = $_POST["movie_actors"];
   $plot = $_POST["plot"];
+  $perkthe = new Perkthe("en-sq");
+  $plotTranslated = $perkthe->translate($plot)['text'][0];
   $imdbid = $_POST["imdbMovieID"];
   $imdbrating = $_POST["imdbMovieRating"];
   $poster = $_POST["photo"];
@@ -46,8 +52,9 @@
 
   $sqlQ = "INSERT INTO Movies(Slideshow, Poster, Viti, Emri, Gjatesia, Zhanri, Regjisor, Aktoret, Plot, ImdbId, ImdbRating, Studio, BoxOffice) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
   $sqlI = $con->prepare($sqlQ);
-  $status = $sqlI->execute([(int)$isSlideshow, $poster, $release_date, $emri, $runtime, $genre, $director, $actors, $plot, $imdbid, $imdbrating, $studio, $boxoffice]);
+  $status = $sqlI->execute([(int)$isSlideshow, $poster, $release_date, $emri, $runtime, $genre, $director, $actors, $plotTranslated, $imdbid, $imdbrating, $studio, $boxoffice]);
   if($status){
     echo "Filmi u insertua me sukses";
+    header("location: ./addMovie.php");
   }
 ?>

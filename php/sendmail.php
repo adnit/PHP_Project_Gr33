@@ -1,4 +1,7 @@
 <?php
+
+
+
 class SendEmail{
 
   private $header = "";
@@ -65,5 +68,11 @@ class SendEmail{
       ';
       return mail($this->email, $subject, $message, $this->header);
 }
+}
+
+class Test extends SendEmail {
+  function printCurrentHeader(){
+    echo "test";
+  }
 }
 ?>

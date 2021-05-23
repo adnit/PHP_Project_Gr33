@@ -1,7 +1,7 @@
 <?php
 class Perkthe {
   private $url = "https://translate.yandex.net/api/v1.5/tr.json/translate";
-  private $key = "trnsl.1.1.20210520T060854Z.afa473dba8d5b3f9.45bd25bf9e51c6016345d2dc255b156c540123af";
+  private $key = "--";
   private $format = "plain";
   function __construct( $language ) {
 		$this->language = $language;

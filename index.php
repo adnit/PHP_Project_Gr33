@@ -2,6 +2,10 @@
  require_once('./php/session.php');
  require_once('./php/connect.php');
 
+ $value = 'Test';
+
+setcookie("TestCookie", $value, time()+3600); 
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,7 +15,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
-    <title>Dashboard - Brand</title>
+    <title>KinoFiek</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
@@ -350,7 +354,7 @@
         <footer class="bg-white sticky-footer">
           <div class="container my-auto">
             <div class="text-center my-auto copyright">
-              <span>Copyright © Brand 2021</span>
+              <span>Copyright - KinoFiek 2021</span>
             </div>
           </div>
         </footer>
